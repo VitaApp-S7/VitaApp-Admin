@@ -61,37 +61,43 @@ export const loginRequest = {
 // export const graphConfig = {
 //     graphMeEndpoint: "Enter_the_Graph_Endpoint_Here/v1.0/me"
 // };
+
+const baseUrl = "http://localhost:5000";
+
+//CLOUD
+//const baseUrl = "https://vitaappgw.northeurope.cloudapp.azure.com";
+
 export const protectedResources = {
   graphMe: {
     endpoint: "https://graph.microsoft.com/v1.0/me",
     scopes: ["User.Read"],
   },
   apiActivity: {
-    endpoint: "http://localhost:5000/moodbooster/",
+    endpoint: baseUrl + "/moodbooster/",
     scopes: ["api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All"], // e.g. api://xxxxxx/access_as_user
   },
   apiUser: {
-    endpoint: "http://localhost:5000/user/",
+    endpoint: baseUrl + "/user/",
     scopes: ["api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All"]
   },
   apiBadge: {
-    endpoint: "http://localhost:5000/badge/",
+    endpoint: baseUrl + "/badge/",
     scopes: ["api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All"]
   },
   apiChallenge: {
-    endpoint: "http://localhost:5000/challenge/",
+    endpoint: baseUrl + "/challenge/",
     scopes: ["api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All"]
   },
   apiNews: {
-    endpoint: "http://localhost:5000/feed/",
+    endpoint: baseUrl + "/feed/",
     scopes: ["api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All"]
   },
   apiFriends: {
-    endpoint: "http://localhost:5000/user/friends/",
+    endpoint: baseUrl + "/user/friends/",
     scopes: ["api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All"]
   },
   apiEvent: {
-    endpoint:"http://localhost:5000/event/",
+    endpoint: baseUrl + "/event/",
     scopes: ["api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All"]
   }
 }
