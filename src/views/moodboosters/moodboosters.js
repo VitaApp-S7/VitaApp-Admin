@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getAllActivities, createActivity, deleteActivityById } from "../../services/moodboosterService"
+import { getAllActivities, createActivity, deleteActivityById, updateActivity } from "../../services/moodboosterService"
 import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormInput, CFormLabel } from "@coreui/react"
 import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
@@ -9,12 +9,18 @@ const Moodboosters = () => {
   const [ accessToken, setAccessToken ] = useState(null)
   const [ data, setData ] = useState([])
   const [ deleteData, setDeleteData ] = useState("")
+  const [ editData, setEditData ] = useState("")
   const [ isOpen, setIsOpen ] = useState(false)
   const [ textField1, setTextField1 ] = useState("")
   const [ textField2, setTextField2 ] = useState("")
   const [ textField3, setTextField3 ] = useState("")
   const [ textField4, setTextField4 ] = useState("")
+  const [ textEditField1, setTextEditField1 ] = useState("")
+  const [ textEditField2, setTextEditField2 ] = useState("")
+  const [ textEditField3, setTextEditField3 ] = useState("")
+  const [ textEditField4, setTextEditField4 ] = useState("")
   const [ deleteModalVisible, setDeleteModalVisible ] = useState(false)
+  const [ editModalVisible, setEditModalVisible ] = useState(false)
 
   const ListItem = (item) => {
     return (
@@ -30,7 +36,8 @@ const Moodboosters = () => {
   }
   // eslint-disable-next-line no-unused-vars
   const onEdit = (item) => {
-
+    setEditData(item)
+    setEditModalVisible(true)
   }
   const onDelete = (item) => {
     setDeleteData(item)
@@ -58,6 +65,36 @@ const Moodboosters = () => {
       </CModal>)
   }
 
+  const EditModal = () => {
+    const item = editData.item;
+    textEditField1 = item.title;
+    textEditField2 = item.description;
+    textEditField3 = item.category;
+    textEditField4 = item.points;
+
+    <CModal visible={editModalVisible} onClose={handleCancel}>
+    <CModalHeader closeButton>
+      <h5>Edit moodbooster</h5>
+    </CModalHeader>
+    <CModalBody>
+      <form>
+        <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
+        <CFormInput placeholder="" value={textEditField1} id="exampleFormControlTextarea1" onChange={(e) => setTextEditField1(e.target.value)} ></CFormInput>
+        <CFormLabel htmlFor="exampleFormControlTextarea1">Description</CFormLabel>
+        <CFormInput placeholder="" value={textEditField2} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextEditField2(e.target.value)} ></CFormInput>
+        <CFormLabel htmlFor="exampleFormControlTextarea1">Category</CFormLabel>
+        <CFormInput placeholder="" value={textEditField3} id="exampleFormControlTextarea1" onChange={(e) => setTextEditField3(e.target.value)} ></CFormInput>
+        <CFormLabel htmlFor="exampleFormControlTextarea1">Points</CFormLabel>
+        <CFormInput placeholder="" type="number" value={textEditField4} id="exampleFormControlTextarea1" min="1" max="5" onChange={(e) => setTextEditField4(e.target.value)} />
+      </form>
+    </CModalBody>
+    <CModalFooter>
+      <CButton color="primary" onClick={handleUpdate(item.id)}>Save</CButton>
+      <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
+    </CModalFooter>
+  </CModal>
+  }
+
   const handleSave = async () => {
     const postData = {
       title: textField1,
@@ -68,14 +105,32 @@ const Moodboosters = () => {
     try {
       await createActivity(postData, accessToken)
       setIsOpen(false)
-      handleActivities()
+      handleCancel()
     } catch (error) {
       console.error("Error:", error)
     }
   }
+  const handleUpdate = async (id) => {
+    const postData = {
+      id: id,
+      title: textEditField1,
+      description: textEditField2,
+      category: textEditField3,
+      points: textEditField4
+    }
+    try {
+      await updateActivity(postData, accessToken)
+      setIsOpen(false)
+      handleCancel()
+    } catch (error) {
+      console.error("Error:", error)
+    }
+  }
+
   const handleCancel = () => {
     setIsOpen(false)
     setDeleteModalVisible(false)
+    setEditModalVisible(false)
   }
 
   useEffect(() => {
