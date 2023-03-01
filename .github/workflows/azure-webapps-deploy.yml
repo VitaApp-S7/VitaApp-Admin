@@ -40,9 +40,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
 
-      - run: npm build
+      - run: npm install
+
+      - run: npm run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3

@@ -41,9 +41,16 @@
 export const msalConfig = {
   auth: {
     clientId: "50f18b4e-1a58-4004-b6b8-5a15e3a2e863", // This is the ONLY mandatory field that you need to supply.
-    authority: "https://login.microsoftonline.com/913b1a98-9696-4db5-b548-9e17b6d3fc68", // Defaults to "https://login.microsoftonline.com/common"
-    redirectUri: process.env.NODE_ENV === "production" ? "https://vitaappadmin.azurewebsites.net/" : "https://localhost:3000", // You must register this URI on Azure Portal/App Registration. Defaults to window.location.origin
-    postLogoutRedirectUri: process.env.NODE_ENV === "production" ? "https://vitaappadmin.azurewebsites.net/" : "https://localhost:3000", // Indicates the page to navigate after logout.
+    authority:
+      "https://login.microsoftonline.com/913b1a98-9696-4db5-b548-9e17b6d3fc68", // Defaults to "https://login.microsoftonline.com/common"
+    redirectUri:
+      process.env.NODE_ENV === "production"
+        ? "https://vitaappadmin.azurewebsites.net/"
+        : "https://localhost:3000", // You must register this URI on Azure Portal/App Registration. Defaults to window.location.origin
+    postLogoutRedirectUri:
+      process.env.NODE_ENV === "production"
+        ? "https://vitaappadmin.azurewebsites.net/"
+        : "https://localhost:3000", // Indicates the page to navigate after logout.
     navigateToLoginRequestUrl: false // If "true", will navigate back to the original request location before processing the auth code response.
   },
   cache: {
@@ -63,7 +70,7 @@ export const loginRequest = { scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc2
 const baseUrl = "http://localhost:5000"
 
 //CLOUD
-const baseUrl = "https://vitaappgw.northeurope.cloudapp.azure.com";
+//const baseUrl = "http://vitaappgw.northeurope.cloudapp.azure.com";
 
 export const protectedResources = {
   graphMe: {
@@ -71,31 +78,31 @@ export const protectedResources = {
     scopes: [ "User.Read" ]
   },
   apiActivity: {
-    endpoint: `${baseUrl  }/moodbooster/`,
+    endpoint: `${baseUrl}/moodbooster/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ] // e.g. api://xxxxxx/access_as_user
   },
   apiUser: {
-    endpoint: `${baseUrl  }/user/`,
+    endpoint: `${baseUrl}/user/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
   },
   apiBadge: {
-    endpoint: `${baseUrl  }/badge/`,
+    endpoint: `${baseUrl}/badge/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
   },
   apiChallenge: {
-    endpoint: `${baseUrl  }/challenge/`,
+    endpoint: `${baseUrl}/challenge/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
   },
   apiNews: {
-    endpoint: `${baseUrl  }/feed/`,
+    endpoint: `${baseUrl}/feed/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
   },
   apiFriends: {
-    endpoint: `${baseUrl  }/user/friends/`,
+    endpoint: `${baseUrl}/user/friends/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
   },
   apiEvent: {
-    endpoint: `${baseUrl  }/event/`,
+    endpoint: `${baseUrl}/event/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
   }
 }
