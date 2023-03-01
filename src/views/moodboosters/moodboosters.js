@@ -195,6 +195,7 @@ const Moodboosters = () => {
         </CModalFooter>
       </CModal>
       <DeleteModal />
+      <EditModal />
       <CListGroup>
         {data.map((item, index) => (
           <ListItem key={index} item={item} />
