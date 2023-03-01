@@ -1,53 +1,33 @@
-import React, {
-  Children,
-  Component,
-  Suspense,
-  useContext,
-  useState,
-} from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import React, { useState } from "react"
 // import './scss/style.scss'
-import { useIsAuthenticated } from "@azure/msal-react";
-import {
-    CButton,
-    CCard,
-    CCardBody,
-    CCardGroup,
-    CCol,
-    CContainer,
-    CForm,
-    CRow,
-  } from '@coreui/react'
-import {
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-  useMsal,
-} from "@azure/msal-react";
-import { loginRequest } from "../../src/authConfig";
+import { CButton } from "@coreui/react"
+import { useMsal } from "@azure/msal-react"
+import { loginRequest } from "../../src/authConfig"
 
 export function ProfileContent() {
-  const { instance, accounts, inProgress } = useMsal();
-  const [accessToken, setAccessToken] = useState(null);
+  const { instance, accounts } = useMsal()
+  const [ accessToken, setAccessToken ] = useState(null)
 
-  const name = accounts[0] && accounts[0].name;
+  const name = accounts[0] && accounts[0].name
 
   function RequestAccessToken() {
     const request = {
       ...loginRequest,
-      account: accounts[0],
-    };
+      account: accounts[0]
+    }
 
     // Silently acquires an access token which is then attached to a request for Microsoft Graph data
     instance
       .acquireTokenSilent(request)
       .then((response) => {
-        setAccessToken(response.accessToken);
+        setAccessToken(response.accessToken)
       })
+      // eslint-disable-next-line no-unused-vars
       .catch((e) => {
         instance.acquireTokenPopup(request).then((response) => {
-          setAccessToken(response.accessToken);
-        });
-      });
+          setAccessToken(response.accessToken)
+        })
+      })
   }
 
   return (
@@ -61,5 +41,5 @@ export function ProfileContent() {
         </CButton>
       )}
     </>
-  );
+  )
 }

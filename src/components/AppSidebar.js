@@ -1,17 +1,16 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react"
+import { useSelector, useDispatch } from "react-redux"
 
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+import { CSidebar, CSidebarNav } from "@coreui/react"
 
-import { AppSidebarNav } from './AppSidebarNav'
+import { AppSidebarNav } from "./AppSidebarNav"
 
 
-import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
+import SimpleBar from "simplebar-react"
+import "simplebar/dist/simplebar.min.css"
 
 // sidebar nav config
-import navigation from '../_nav'
+import navigation from "../_nav"
 
 
 const AppSidebar = () => {
@@ -25,7 +24,10 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch({ type: 'set', sidebarShow: visible })
+        dispatch({
+          type: "set",
+          sidebarShow: visible 
+        })
       }}
     >
       <CSidebarNav>

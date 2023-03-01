@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CCard,
   CCardBody,
@@ -11,9 +11,9 @@ import {
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
-  CTableRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CTableRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const Tables = () => {
   return (
@@ -139,7 +139,7 @@ const Tables = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Use <code>striped</code> property to add zebra-striping to any table row within the{' '}
+              Use <code>striped</code> property to add zebra-striping to any table row within the{" "}
               <code>&lt;CTableBody&gt;</code>.
             </p>
             <DocsExample href="components/table#striped-rows">
@@ -248,7 +248,7 @@ const Tables = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Use <code>hover</code> property to enable a hover state on table rows within a{' '}
+              Use <code>hover</code> property to enable a hover state on table rows within a{" "}
               <code>&lt;CTableBody&gt;</code>.
             </p>
             <DocsExample href="components/table#hoverable-rows">
@@ -465,7 +465,7 @@ const Tables = () => {
             <p className="text-medium-emphasis small">
               <a href="https://coreui.io/docs/4.0/utilities/borders#border-color">
                 Border color utilities
-              </a>{' '}
+              </a>{" "}
               can be added to change colors:
             </p>
             <DocsExample href="components/table#bordered-tables">
@@ -628,7 +628,7 @@ const Tables = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               Table cells of <code>&lt;CTableHead&gt;</code> are always vertical aligned to the
-              bottom. Table cells in <code>&lt;CTableBody&gt;</code> inherit their alignment from{' '}
+              bottom. Table cells in <code>&lt;CTableBody&gt;</code> inherit their alignment from{" "}
               <code>&lt;CTable&gt;</code> and are aligned to the the top by default. Use the align
               property to re-align where needed.
             </p>
@@ -777,8 +777,8 @@ const Tables = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Similar to tables and dark tables, use the modifier prop{' '}
-              <code>color=&#34;light&#34;</code> or <code>color=&#34;dark&#34;</code> to make{' '}
+              Similar to tables and dark tables, use the modifier prop{" "}
+              <code>color=&#34;light&#34;</code> or <code>color=&#34;dark&#34;</code> to make{" "}
               <code>&lt;CTableHead&gt;</code>s appear light or dark gray.
             </p>
             <DocsExample href="components/table#table-head">
@@ -940,7 +940,7 @@ const Tables = () => {
               </CTable>
             </DocsExample>
             <p className="text-medium-emphasis small">
-              You can also put the <code>&lt;CTableCaption&gt;</code> on the top of the table with{' '}
+              You can also put the <code>&lt;CTableCaption&gt;</code> on the top of the table with{" "}
               <code>caption=&#34;top&#34;</code>.
             </p>
             <DocsExample href="components/table#captions">

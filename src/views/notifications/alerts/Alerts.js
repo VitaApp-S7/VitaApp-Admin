@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CAlert,
   CAlertHeading,
@@ -7,9 +7,9 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const Alerts = () => {
   return (
@@ -22,8 +22,8 @@ const Alerts = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               React Alert is prepared for any length of text, as well as an optional close button.
-              For a styling, use one of the <strong>required</strong> contextual <code>color</code>{' '}
-              props (e.g., <code>primary</code>). For inline dismissal, use the{' '}
+              For a styling, use one of the <strong>required</strong> contextual <code>color</code>{" "}
+              props (e.g., <code>primary</code>). For inline dismissal, use the{" "}
               <a href="https://coreui.io/react/docs/4.0/components/alert#dismissing">
                 dismissing prop
               </a>
@@ -131,7 +131,7 @@ const Alerts = () => {
                 color="warning"
                 dismissible
                 onClose={() => {
-                  alert('👋 Well, hi there! Thanks for dismissing me.')
+                  alert("👋 Well, hi there! Thanks for dismissing me.")
                 }}
               >
                 <strong>Go right ahead</strong> and click that dimiss over there on the right.
