@@ -72,6 +72,7 @@ const Moodboosters = () => {
     textEditField3 = item.category;
     textEditField4 = item.points;
 
+    return(
     <CModal visible={editModalVisible} onClose={handleCancel}>
     <CModalHeader closeButton>
       <h5>Edit moodbooster</h5>
@@ -93,6 +94,7 @@ const Moodboosters = () => {
       <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
     </CModalFooter>
   </CModal>
+    )
   }
 
   const handleSave = async () => {
