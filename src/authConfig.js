@@ -62,10 +62,10 @@ export const loginRequest = {
 //     graphMeEndpoint: "Enter_the_Graph_Endpoint_Here/v1.0/me"
 // };
 
-const baseUrl = "http://localhost:5000";
+//const baseUrl = "http://localhost:5000";
 
 //CLOUD
-//const baseUrl = "https://vitaappgw.northeurope.cloudapp.azure.com";
+const baseUrl = "https://vitaappgw.northeurope.cloudapp.azure.com";
 
 export const protectedResources = {
   graphMe: {

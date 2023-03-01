@@ -70,6 +70,8 @@ const Moodboosters = () => {
       category: textField3,
       points: textField4,
     };
+
+    console.log(postData);
     try {
       var createMoodbooster = await createActivity(postData, accessToken);
       setIsOpen(false);
@@ -131,11 +133,11 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
             <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Description</CFormLabel>
-            <CFormInput placeholder="" value={textField2} id="exampleFormControlTextarea1" onChange={(e) => setTextField2(e.target.value)} ></CFormInput>
+            <CFormInput placeholder="" value={textField2} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextField2(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Category</CFormLabel>
             <CFormInput placeholder="" value={textField3} id="exampleFormControlTextarea1" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Points</CFormLabel>
-            <CFormInput placeholder="" type="number" value={textField4} id="exampleFormControlTextarea1" onChange={(e) => setTextField4(e.target.value)} />
+            <CFormInput placeholder="" type="number" value={textField4} id="exampleFormControlTextarea1" min="1" max="5" onChange={(e) => setTextField4(e.target.value)} />
           </form>
         </CModalBody>
         <CModalFooter>
