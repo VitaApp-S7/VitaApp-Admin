@@ -21,13 +21,20 @@ export async function deleteActivityById(id, token) {
   var response = await axios.delete(url + id, { headers: { Authorization: `Bearer ${token}` }})
   return response.data
 }
-export async function updateActivity(token, activity) {
-  var response = await axios.put(url, activity, { headers: { Authorization: `Bearer ${token}` }})
-  return response.data
-}
-export async function addActivity(token, activity) {
-  console.log(token + activity)
-  var response = await axios.post(url, activity, { headers: { Authorization: `Bearer ${token}` }})
+export async function updateActivity(activity, token) {
+  var response = await axios.put(`${url}update`, {
+    category: {
+      id: null,
+      name: activity.category,
+      source: [ "Object" ],
+      target: [ "Object" ]
+    },
+    id: activity.id,
+    description: activity.description,
+    points: activity.points,
+    status: "ACTIVE",
+    title: activity.title
+  }, { headers: { Authorization: `Bearer ${token}` }})
   return response.data
 }
 
