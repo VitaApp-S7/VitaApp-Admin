@@ -63,7 +63,7 @@ export const loginRequest = { scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc2
 const baseUrl = "http://localhost:5000"
 
 //CLOUD
-//const baseUrl = "https://vitaappgw.northeurope.cloudapp.azure.com";
+const baseUrl = "https://vitaappgw.northeurope.cloudapp.azure.com";
 
 export const protectedResources = {
   graphMe: {

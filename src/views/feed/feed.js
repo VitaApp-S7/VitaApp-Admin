@@ -133,9 +133,9 @@ const Feed = () => {
         <CModalBody>
           <form>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
-            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
+            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="20" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Description</CFormLabel>
-            <CFormTextarea placeholder="" value={textField2} id="exampleFormControlTextarea1" onChange={(e) => setTextField2(e.target.value)} ></CFormTextarea>
+            <CFormTextarea placeholder="" value={textField2} id="exampleFormControlTextarea1" maxLength="1000" onChange={(e) => setTextField2(e.target.value)} ></CFormTextarea>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Link</CFormLabel>
             <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea1" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
           </form>
