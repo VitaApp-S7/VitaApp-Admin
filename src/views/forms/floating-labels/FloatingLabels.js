@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CCard,
   CCardBody,
@@ -9,9 +9,9 @@ import {
   CFormFloating,
   CFormSelect,
   CFormTextarea,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const FloatingLabels = () => {
   return (
@@ -23,10 +23,10 @@ const FloatingLabels = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Wrap a pair of <code>&lt;CFormInput&gt;</code> and <code>&lt;CFormLabel&gt;</code>{' '}
+              Wrap a pair of <code>&lt;CFormInput&gt;</code> and <code>&lt;CFormLabel&gt;</code>{" "}
               elements in <code>CFormFloating</code> to enable floating labels with textual form
-              fields. A <code>placeholder</code> is required on each <code>&lt;CFormInput&gt;</code>{' '}
-              as our method of CSS-only floating labels uses the <code>:placeholder-shown</code>{' '}
+              fields. A <code>placeholder</code> is required on each <code>&lt;CFormInput&gt;</code>{" "}
+              as our method of CSS-only floating labels uses the <code>:placeholder-shown</code>{" "}
               pseudo-element. Also note that the <code>&lt;CFormInput&gt;</code> must come first so
               we can utilize a sibling selector (e.g., <code>~</code>).
             </p>
@@ -65,7 +65,7 @@ const FloatingLabels = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              By default, <code>&lt;CFormTextarea&gt;</code>s will be the same height as{' '}
+              By default, <code>&lt;CFormTextarea&gt;</code>s will be the same height as{" "}
               <code>&lt;CFormInput&gt;</code>s.
             </p>
             <DocsExample href="forms/floating-labels#textareas">
@@ -78,7 +78,7 @@ const FloatingLabels = () => {
               </CFormFloating>
             </DocsExample>
             <p className="text-medium-emphasis small">
-              To set a custom height on your <code>&lt;CFormTextarea;&gt;</code>, do not use the{' '}
+              To set a custom height on your <code>&lt;CFormTextarea;&gt;</code>, do not use the{" "}
               <code>rows</code> attribute. Instead, set an explicit <code>height</code> (either
               inline or via custom CSS).
             </p>
@@ -87,7 +87,7 @@ const FloatingLabels = () => {
                 <CFormTextarea
                   placeholder="Leave a comment here"
                   id="floatingTextarea2"
-                  style={{ height: '100px' }}
+                  style={{ height: "100px" }}
                 ></CFormTextarea>
                 <CFormLabel htmlFor="floatingTextarea2">Comments</CFormLabel>
               </CFormFloating>
@@ -102,10 +102,10 @@ const FloatingLabels = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Other than <code>&lt;CFormInput&gt;</code>, floating labels are only available on{' '}
-              <code>&lt;CFormSelect&gt;</code>s. They work in the same way, but unlike{' '}
-              <code>&lt;CFormInput&gt;</code>s, they&#39;ll always show the{' '}
-              <code>&lt;CFormLabel&gt;</code> in its floated state.{' '}
+              Other than <code>&lt;CFormInput&gt;</code>, floating labels are only available on{" "}
+              <code>&lt;CFormSelect&gt;</code>s. They work in the same way, but unlike{" "}
+              <code>&lt;CFormInput&gt;</code>s, they&#39;ll always show the{" "}
+              <code>&lt;CFormLabel&gt;</code> in its floated state.{" "}
               <strong>
                 Selects with <code>size</code> and <code>multiple</code> are not supported.
               </strong>

@@ -1,41 +1,35 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
+import React from "react"
+import CIcon from "@coreui/icons-react"
 import {
   cilChartLine,
-  cilGlobeAlt,
-} from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+  cilGlobeAlt
+} from "@coreui/icons"
+import { CNavItem } from "@coreui/react"
 
 const _nav = [
   {
     component: CNavItem,
-    name: 'Moodboosters',
-    to: '/moodboosters',
+    name: "Moodboosters",
+    to: "/moodboosters",
     icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-    },
+    badge: { color: "info" }
   },
   {
     component: CNavItem,
-    name: 'Events',
-    to: '/events',
+    name: "Events",
+    to: "/events",
     icon: <CIcon icon={cilGlobeAlt
     } customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-    },
+    badge: { color: "info" }
   },
   {
     component: CNavItem,
-    name: 'News',
-    to: '/news',
+    name: "News",
+    to: "/news",
     icon: <CIcon icon={cilGlobeAlt
     } customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-    },
-  },
+    badge: { color: "info" }
+  }
   // {
   //   component: CNavItem,
   //   name: 'Colors',

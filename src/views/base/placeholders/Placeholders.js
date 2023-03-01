@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CButton,
   CCard,
@@ -9,11 +9,11 @@ import {
   CCardTitle,
   CCol,
   CPlaceholder,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
-import ReactImg from 'src/assets/images/react.jpg'
+import ReactImg from "src/assets/images/react.jpg"
 
 const Placeholders = () => {
   return (
@@ -31,7 +31,7 @@ const Placeholders = () => {
             </p>
             <DocsExample href="components/placeholder">
               <div className="d-flex justify-content-around p-3">
-                <CCard style={{ width: '18rem' }}>
+                <CCard style={{ width: "18rem" }}>
                   <CCardImage orientation="top" src={ReactImg} />
                   <CCardBody>
                     <CCardTitle>Card title</CCardTitle>
@@ -42,7 +42,7 @@ const Placeholders = () => {
                     <CButton href="#">Go somewhere</CButton>
                   </CCardBody>
                 </CCard>
-                <CCard style={{ width: '18rem' }}>
+                <CCard style={{ width: "18rem" }}>
                   <CCardImage
                     component="svg"
                     orientation="top"
@@ -119,7 +119,7 @@ const Placeholders = () => {
             <DocsExample href="components/placeholder#width">
               <CPlaceholder xs={6} />
               <CPlaceholder className="w-75" />
-              <CPlaceholder style={{ width: '30%' }} />
+              <CPlaceholder style={{ width: "30%" }} />
             </DocsExample>
           </CCardBody>
         </CCard>
@@ -153,7 +153,7 @@ const Placeholders = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               The size of <code>&lt;CPlaceholder&gt;</code>s are based on the typographic style of
-              the parent element. Customize them with <code>size</code> prop: <code>lg</code>,{' '}
+              the parent element. Customize them with <code>size</code> prop: <code>lg</code>,{" "}
               <code>sm</code>, or <code>xs</code>.
             </p>
             <DocsExample href="components/placeholder#sizing">
@@ -170,7 +170,7 @@ const Placeholders = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Animate placeholders with <code>animation=&#34;glow&#34;</code> or{' '}
+              Animate placeholders with <code>animation=&#34;glow&#34;</code> or{" "}
               <code>animation=&#34;wave&#34;</code> to better convey the perception of something
               being <em>actively</em> loaded.
             </p>

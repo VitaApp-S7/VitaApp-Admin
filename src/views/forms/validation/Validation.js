@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 import {
   CButton,
   CCard,
@@ -14,12 +14,12 @@ import {
   CFormTextarea,
   CInputGroup,
   CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const CustomStyles = () => {
-  const [validated, setValidated] = useState(false)
+  const [ validated, setValidated ] = useState(false)
   const handleSubmit = (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -96,7 +96,7 @@ const CustomStyles = () => {
 }
 
 const BrowserDefaults = () => {
-  const [validated, setValidated] = useState(false)
+  const [ validated, setValidated ] = useState(false)
   const handleSubmit = (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -168,7 +168,7 @@ const BrowserDefaults = () => {
 }
 
 const Tooltips = () => {
-  const [validated, setValidated] = useState(false)
+  const [ validated, setValidated ] = useState(false)
   const handleSubmit = (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -259,7 +259,7 @@ const Validation = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              For custom CoreUI form validation messages, you&#39;ll need to add the{' '}
+              For custom CoreUI form validation messages, you&#39;ll need to add the{" "}
               <code>noValidate</code> boolean property to your <code>&lt;CForm&gt;</code>. This
               disables the browser default feedback tooltips, but still provides access to the form
               validation APIs in JavaScript. Try to submit the form below; our JavaScript will
@@ -269,7 +269,7 @@ const Validation = () => {
             </p>
             <p className="text-medium-emphasis small">
               Custom feedback styles apply custom colors, borders, focus styles, and background
-              icons to better communicate feedback.{' '}
+              icons to better communicate feedback.{" "}
             </p>
             <DocsExample href="forms/validation">{CustomStyles()}</DocsExample>
           </CCardBody>
@@ -303,7 +303,7 @@ const Validation = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               We recommend using client-side validation, but in case you require server-side
-              validation, you can indicate invalid and valid form fields with <code>invalid</code>{' '}
+              validation, you can indicate invalid and valid form fields with <code>invalid</code>{" "}
               and <code>valid</code> boolean properties.
             </p>
             <p className="text-medium-emphasis small">
@@ -487,7 +487,7 @@ const Validation = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               If your form layout allows it, you can swap the text for the tooltip to display
-              validation feedback in a styled tooltip. Be sure to have a parent with{' '}
+              validation feedback in a styled tooltip. Be sure to have a parent with{" "}
               <code>position: relative</code> on it for tooltip positioning. In the example below,
               our column classes have this already, but your project may require an alternative
               setup.

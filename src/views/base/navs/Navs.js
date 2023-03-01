@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CRow,
   CCol,
@@ -11,9 +11,9 @@ import {
   CDropdownToggle,
   CNav,
   CNavItem,
-  CNavLink,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CNavLink
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const Navs = () => {
   return (
@@ -51,7 +51,7 @@ const Navs = () => {
               </CNav>
             </DocsExample>
             <p className="text-medium-emphasis small">
-              Classes are used throughout, so your markup can be super flexible. Use{' '}
+              Classes are used throughout, so your markup can be super flexible. Use{" "}
               <code>&lt;ul&gt;</code>s like above, <code>&lt;ol&gt;</code> if the order of your
               items is important, or roll your own with a <code>&lt;nav&gt;</code> element. Because
               the .nav uses display: flex, the nav links behave the same as nav items would, but
@@ -79,7 +79,7 @@ const Navs = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Change the horizontal alignment of your nav with{' '}
+              Change the horizontal alignment of your nav with{" "}
               <a href="https://coreui.io/docs/layout/grid/#horizontal-alignment">
                 flexbox utilities
               </a>
@@ -142,7 +142,7 @@ const Navs = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Stack your navigation by changing the flex item direction with the{' '}
+              Stack your navigation by changing the flex item direction with the{" "}
               <code>.flex-column</code> utility. Need to stack them on some viewports but not
               others? Use the responsive versions (e.g., <code>.flex-sm-column</code>).
             </p>
@@ -242,7 +242,7 @@ const Navs = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               Force your <code>.nav</code>&#39;s contents to extend the full available width one of
-              two modifier classes. To proportionately fill all available space with your{' '}
+              two modifier classes. To proportionately fill all available space with your{" "}
               <code>.nav-item</code>s, use <code>layout=&#34;fill&#34;</code>. Notice that all
               horizontal space is occupied, but not every nav item has the same width.
             </p>
@@ -301,7 +301,7 @@ const Navs = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              If you need responsive nav variations, consider using a series of{' '}
+              If you need responsive nav variations, consider using a series of{" "}
               <a href="https://coreui.io/docs/utilities/flex">flexbox utilities</a>. While more
               verbose, these utilities offer greater customization across responsive breakpoints. In
               the example below, our nav will be stacked on the lowest breakpoint, then adapt to a

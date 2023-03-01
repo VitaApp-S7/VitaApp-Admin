@@ -1,13 +1,11 @@
-import axios from "axios";
-import { protectedResources } from "../authConfig";
+import axios from "axios"
+import { protectedResources } from "../authConfig"
 
-const url = protectedResources.apiNews.endpoint;
+const url = protectedResources.apiNews.endpoint
 
 export async function getNews(token) {
-  var response = await axios.get(url + "all", {
-      headers: { Authorization: `Bearer ${token}` },
-  });
-  return response;
+  var response = await axios.get(`${url  }all`, { headers: { Authorization: `Bearer ${token}` }})
+  return response
 }
 export async function createNews(data, token) {
   console.log(data, token)
@@ -18,15 +16,13 @@ export async function createNews(data, token) {
       title: data.title,
       url: data.link,
       description: data.description,
-      date: Date.now(),
+      date: Date.now()
     },
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  return response.data;
+    { headers: { Authorization: `Bearer ${token}` }}
+  )
+  return response.data
 }
 export async function deleteNewsById(id, token) {
-  var response = await axios.delete(url + id, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
+  var response = await axios.delete(url + id, { headers: { Authorization: `Bearer ${token}` }})
+  return response.data
 }

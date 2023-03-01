@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 import {
   CButton,
   CCard,
@@ -13,12 +13,12 @@ import {
   CModalTitle,
   CPopover,
   CRow,
-  CTooltip,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CTooltip
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const LiveDemo = () => {
-  const [visible, setVisible] = useState(false)
+  const [ visible, setVisible ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisible(!visible)}>Launch demo modal</CButton>
@@ -39,7 +39,7 @@ const LiveDemo = () => {
 }
 
 const StaticBackdrop = () => {
-  const [visible, setVisible] = useState(false)
+  const [ visible, setVisible ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisible(!visible)}>Launch static backdrop modal</CButton>
@@ -62,7 +62,7 @@ const StaticBackdrop = () => {
 }
 
 const ScrollingLongContent = () => {
-  const [visible, setVisible] = useState(false)
+  const [ visible, setVisible ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisible(!visible)}>Launch demo modal</CButton>
@@ -162,7 +162,7 @@ const ScrollingLongContent = () => {
 }
 
 const ScrollingLongContent2 = () => {
-  const [visible, setVisible] = useState(false)
+  const [ visible, setVisible ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisible(!visible)}>Launch demo modal</CButton>
@@ -262,7 +262,7 @@ const ScrollingLongContent2 = () => {
 }
 
 const VerticallyCentered = () => {
-  const [visible, setVisible] = useState(false)
+  const [ visible, setVisible ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisible(!visible)}>Vertically centered modal</CButton>
@@ -286,7 +286,7 @@ const VerticallyCentered = () => {
 }
 
 const VerticallyCentered2 = () => {
-  const [visible, setVisible] = useState(false)
+  const [ visible, setVisible ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisible(!visible)}>Vertically centered scrollable modal</CButton>
@@ -329,7 +329,7 @@ const VerticallyCentered2 = () => {
 }
 
 const TooltipsPopovers = () => {
-  const [visible, setVisible] = useState(false)
+  const [ visible, setVisible ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisible(!visible)}>Launch demo modal</CButton>
@@ -343,7 +343,7 @@ const TooltipsPopovers = () => {
             This
             <CPopover title="Popover title" content="Popover body content is set in this property.">
               <CButton>button</CButton>
-            </CPopover>{' '}
+            </CPopover>{" "}
             triggers a popover on click.
           </p>
           <hr />
@@ -351,11 +351,11 @@ const TooltipsPopovers = () => {
           <p>
             <CTooltip content="Tooltip">
               <CLink>This link</CLink>
-            </CTooltip>{' '}
+            </CTooltip>{" "}
             and
             <CTooltip content="Tooltip">
               <CLink>that link</CLink>
-            </CTooltip>{' '}
+            </CTooltip>{" "}
             have tooltips on hover.
           </p>
         </CModalBody>
@@ -371,9 +371,9 @@ const TooltipsPopovers = () => {
 }
 
 const OptionalSizes = () => {
-  const [visibleXL, setVisibleXL] = useState(false)
-  const [visibleLg, setVisibleLg] = useState(false)
-  const [visibleSm, setVisibleSm] = useState(false)
+  const [ visibleXL, setVisibleXL ] = useState(false)
+  const [ visibleLg, setVisibleLg ] = useState(false)
+  const [ visibleSm, setVisibleSm ] = useState(false)
   return (
     <>
       <CButton onClick={() => setVisibleXL(!visibleXL)}>Extra large modal</CButton>
@@ -402,12 +402,12 @@ const OptionalSizes = () => {
 }
 
 const FullscreenModal = () => {
-  const [visible, setVisible] = useState(false)
-  const [visibleSm, setVisibleSm] = useState(false)
-  const [visibleMd, setVisibleMd] = useState(false)
-  const [visibleLg, setVisibleLg] = useState(false)
-  const [visibleXL, setVisibleXL] = useState(false)
-  const [visibleXXL, setVisibleXXL] = useState(false)
+  const [ visible, setVisible ] = useState(false)
+  const [ visibleSm, setVisibleSm ] = useState(false)
+  const [ visibleMd, setVisibleMd ] = useState(false)
+  const [ visibleLg, setVisibleLg ] = useState(false)
+  const [ visibleXL, setVisibleXL ] = useState(false)
+  const [ visibleXXL, setVisibleXXL ] = useState(false)
 
   return (
     <>
@@ -467,7 +467,7 @@ const Modals = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Below is a static modal example (meaning its <code>position</code> and{' '}
+              Below is a static modal example (meaning its <code>position</code> and{" "}
               <code>display</code> have been overridden). Included are the modal header, modal body
               (required for <code>padding</code>), and modal footer (optional). We ask that you
               include modal headers with dismiss actions whenever possible, or provide another
@@ -538,7 +538,7 @@ const Modals = () => {
               {ScrollingLongContent()}
             </DocsExample>
             <p className="text-medium-emphasis small">
-              You can also create a scrollable modal that allows scroll the modal body by adding{' '}
+              You can also create a scrollable modal that allows scroll the modal body by adding{" "}
               <code>scrollable</code> prop.
             </p>
             <DocsExample href="components/modal#scrolling-long-content">
@@ -590,7 +590,7 @@ const Modals = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Modals have three optional sizes, available via modifier classes to be placed on a{' '}
+              Modals have three optional sizes, available via modifier classes to be placed on a{" "}
               <code>&lt;CModal&gt;</code>. These sizes kick in at certain breakpoints to avoid
               horizontal scrollbars on narrower viewports.
             </p>

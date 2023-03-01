@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from "react";
-import {
-  getAllActivities, createActivity, deleteActivityById
-} from "../../services/moodboosterService";
-import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormTextarea, CInput, CInputGroup, CFormInput, CFormLabel } from '@coreui/react'
-import {
-  useMsal,
-} from "@azure/msal-react";
-import { loginRequest } from "../../authConfig";
+import React, { useEffect, useState } from "react"
+import { getAllActivities, createActivity, deleteActivityById } from "../../services/moodboosterService"
+import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormInput, CFormLabel } from "@coreui/react"
+import { useMsal } from "@azure/msal-react"
+import { loginRequest } from "../../authConfig"
 
 const Moodboosters = () => {
-  const { instance, accounts, inProgress } = useMsal();
-  const [accessToken, setAccessToken] = useState(null);
-  const [data, setData] = useState([]);
-  const [deleteData, setDeleteData] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [textField1, setTextField1] = useState("");
-  const [textField2, setTextField2] = useState("");
-  const [textField3, setTextField3] = useState("");
-  const [textField4, setTextField4] = useState("");
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const name = accounts[0] && accounts[0].name;
+  const { instance, accounts } = useMsal()
+  const [ accessToken, setAccessToken ] = useState(null)
+  const [ data, setData ] = useState([])
+  const [ deleteData, setDeleteData ] = useState("")
+  const [ isOpen, setIsOpen ] = useState(false)
+  const [ textField1, setTextField1 ] = useState("")
+  const [ textField2, setTextField2 ] = useState("")
+  const [ textField3, setTextField3 ] = useState("")
+  const [ textField4, setTextField4 ] = useState("")
+  const [ deleteModalVisible, setDeleteModalVisible ] = useState(false)
 
   const ListItem = (item) => {
     return (
@@ -32,8 +26,9 @@ const Moodboosters = () => {
           <CButton color="warning" className="float-right" onClick={() => onDelete(item)}>Delete</CButton>
         </div>
       </CListGroupItem>
-    );
+    )
   }
+  // eslint-disable-next-line no-unused-vars
   const onEdit = (item) => {
 
   }
@@ -44,7 +39,7 @@ const Moodboosters = () => {
   const deleteMoodbooster = async (item) => {
     await deleteActivityById(item.id, accessToken)
     setDeleteModalVisible(false)
-    handleActivities();
+    handleActivities()
   }
   const DeleteModal = () => {
     const item = deleteData.item
@@ -68,16 +63,14 @@ const Moodboosters = () => {
       title: textField1,
       description: textField2,
       category: textField3,
-      points: textField4,
-    };
-
-    console.log(postData);
+      points: textField4
+    }
     try {
-      var createMoodbooster = await createActivity(postData, accessToken);
-      setIsOpen(false);
-      handleActivities();
+      await createActivity(postData, accessToken)
+      setIsOpen(false)
+      handleActivities()
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error)
     }
   }
   const handleCancel = () => {
@@ -87,38 +80,39 @@ const Moodboosters = () => {
 
   useEffect(() => {
     requestAccestoken()
-  }, [accessToken]);
+  }, [ accessToken ])
 
   const requestAccestoken = async () => {
     const request = {
       ...loginRequest,
       account: accounts[0]
-    };
+    }
 
     // Silently acquires an access token which is then attached to a request for Microsoft Graph data
     await instance.acquireTokenSilent(request).then((response) => {
-      setAccessToken(response.accessToken);
+      setAccessToken(response.accessToken)
     }).then(() => {
       if (accessToken) {
-        handleActivities();
+        handleActivities()
       }
+    // eslint-disable-next-line no-unused-vars
     }).catch((e) => {
       instance.acquireTokenPopup(request).then((response) => {
-        setAccessToken(response.accessToken);
+        setAccessToken(response.accessToken)
       }).then(() => {
         if (accessToken) {
-          handleActivities();
+          handleActivities()
         }
-      });
-    });
+      })
+    })
 
   }
 
   const handleActivities = async () => {
-    var activities = await getAllActivities(accessToken);
-    setData(await activities);
+    var activities = await getAllActivities(accessToken)
+    setData(await activities)
     console.log(activities)
-  };
+  }
   return (
     <>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -154,8 +148,6 @@ const Moodboosters = () => {
     </>
   )
 }
-const buttons = {
-  margin: "10px",
-};
+const buttons = { margin: "10px" }
 
 export default Moodboosters

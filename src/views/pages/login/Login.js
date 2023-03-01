@@ -1,6 +1,6 @@
 import React from "react"
 import "./page-login.css"
-import { loginRequest } from "../../../authConfig.js";
+import { loginRequest } from "../../../authConfig.js"
 import {
   CButton,
   CCard,
@@ -9,19 +9,19 @@ import {
   CCol,
   CContainer,
   CForm,
-  CRow,
-} from '@coreui/react'
+  CRow
+} from "@coreui/react"
 // import { MsalContext } from "@azure/msal-react"
-import { useMsal } from "@azure/msal-react";
+import { useMsal } from "@azure/msal-react"
 
 export const Login = () => {
-  const { instance } = useMsal();
+  const { instance } = useMsal()
 
   const handleLogin = (loginType) => {
     if (loginType === "popup") {
       instance.loginPopup(loginRequest).catch(e => {
-        console.log(e);
-      });
+        console.log(e)
+      })
     }
   }
   return (
@@ -50,6 +50,6 @@ export const Login = () => {
         </CRow>
       </CContainer>
     </div>
-  );
+  )
 }
-export default Login;
+export default Login
