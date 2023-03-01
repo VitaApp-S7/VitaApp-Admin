@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from "react";
-import {
-  getNews, createNews, deleteNewsById
-} from "../../services/newsService";
-import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormTextarea, CInput, CInputGroup, CFormInput, CFormLabel } from '@coreui/react'
-import {
-  useMsal,
-} from "@azure/msal-react";
-import { loginRequest } from "../../authConfig";
+import React, { useEffect, useState } from "react"
+import { getNews, createNews, deleteNewsById } from "../../services/newsService"
+import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormTextarea, CFormInput, CFormLabel } from "@coreui/react"
+import { useMsal } from "@azure/msal-react"
+import { loginRequest } from "../../authConfig"
 
 const Feed = () => {
-  const { instance, accounts, inProgress } = useMsal();
-  const [accessToken, setAccessToken] = useState(null);
-  const [data, setData] = useState([]);
-  const [deleteData, setDeleteData] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [textField1, setTextField1] = useState("");
-  const [textField2, setTextField2] = useState("");
-  const [textField3, setTextField3] = useState("");
-  const [textField4, setTextField4] = useState("");
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const name = accounts[0] && accounts[0].name;
+  const { instance, accounts } = useMsal()
+  const [ accessToken, setAccessToken ] = useState(null)
+  const [ data, setData ] = useState([])
+  const [ deleteData, setDeleteData ] = useState("")
+  const [ isOpen, setIsOpen ] = useState(false)
+  // const [ title, setTitle ] = useState("")
+  const [ textField1, setTextField1 ] = useState("")
+  const [ textField2, setTextField2 ] = useState("")
+  const [ textField3, setTextField3 ] = useState("")
+  const [ textField4, setTextField4 ] = useState("")
+  const [ deleteModalVisible, setDeleteModalVisible ] = useState(false)
+  // const name = accounts[0] && accounts[0].name
 
   const ListItem = (item) => {
     return (
@@ -33,8 +29,9 @@ const Feed = () => {
           <CButton color="warning" className="float-right" onClick={() => onDelete(item)}>Delete</CButton>
         </div>
       </CListGroupItem>
-    );
+    )
   }
+  // eslint-disable-next-line no-unused-vars
   const onEdit = (item) => {
 
   }
@@ -45,7 +42,7 @@ const Feed = () => {
   const deleteItem = async (item) => {
     await deleteNewsById(item.id, accessToken)
     setDeleteModalVisible(false)
-    handleActivities();
+    handleActivities()
   }
   const DeleteModal = () => {
     const item = deleteData.item
@@ -68,61 +65,62 @@ const Feed = () => {
     const postData = {
       title: textField1,
       description: textField2,
-      link: textField3,
-    };
+      link: textField3
+    }
     try {
-      var createEvent = await createNews(postData, accessToken);
-      setIsOpen(false);
-      setTextField1("");
-      setTextField2("");
-      setTextField3("");
-      handleActivities();
+      await createNews(postData, accessToken)
+      setIsOpen(false)
+      setTextField1("")
+      setTextField2("")
+      setTextField3("")
+      handleActivities()
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error)
     }
   }
   const handleCancel = () => {
-    setTextField1("");
-    setTextField2("");
-    setTextField3("");
+    setTextField1("")
+    setTextField2("")
+    setTextField3("")
     setIsOpen(false)
     setDeleteModalVisible(false)
   }
 
   useEffect(() => {
     requestAccestoken()
-  }, [accessToken]);
+  }, [ accessToken ])
 
   const requestAccestoken = async () => {
     const request = {
       ...loginRequest,
       account: accounts[0]
-    };
+    }
 
     // Silently acquires an access token which is then attached to a request for Microsoft Graph data
     await instance.acquireTokenSilent(request).then((response) => {
-      setAccessToken(response.accessToken);
+      setAccessToken(response.accessToken)
     }).then(() => {
       if (accessToken) {
-        handleActivities();
+        handleActivities()
       }
+    // eslint-disable-next-line no-unused-vars
     }).catch((e) => {
       instance.acquireTokenPopup(request).then((response) => {
-        setAccessToken(response.accessToken);
+        setAccessToken(response.accessToken)
       }).then(() => {
         if (accessToken) {
-          handleActivities();
+          handleActivities()
         }
-      });
-    });
+      })
+    })
 
   }
 
   const handleActivities = async () => {
-    var news = await getNews(accessToken);
-    setData(await news.data);
+    var news = await getNews(accessToken)
+    setData(await news.data)
     console.log(news.data)
-  };
+  }
   return (
     <>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -156,8 +154,6 @@ const Feed = () => {
     </>
   )
 }
-const buttons = {
-  margin: "10px",
-};
+const buttons = { margin: "10px" }
 
 export default Feed

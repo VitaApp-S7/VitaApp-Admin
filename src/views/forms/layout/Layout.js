@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CButton,
   CCard,
@@ -12,9 +12,9 @@ import {
   CFormSelect,
   CInputGroup,
   CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const Layout = () => {
   return (
@@ -118,7 +118,7 @@ const Layout = () => {
             <p className="text-medium-emphasis small">
               Create horizontal forms with the grid by adding the <code>.row</code> class to form
               groups and using the <code>.col-*-*</code> classes to specify the width of your labels
-              and controls. Be sure to add <code>.col-form-label</code> to your{' '}
+              and controls. Be sure to add <code>.col-form-label</code> to your{" "}
               <code>&lt;CFormLabel&gt;</code>s as well so they&#39;re vertically centered with their
               associated form controls.
             </p>
@@ -247,11 +247,11 @@ const Layout = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              As shown in the previous examples, our grid system allows you to place any number of{' '}
+              As shown in the previous examples, our grid system allows you to place any number of{" "}
               <code>&lt;CCol&gt;</code>s within a <code>&lt;CRow&gt;</code>. They&#39;ll split the
               available width equally between them. You may also pick a subset of your columns to
               take up more or less space, while the remaining <code>&lt;CCol&gt;</code>s equally
-              split the rest, with specific column classes like{' '}
+              split the rest, with specific column classes like{" "}
               <code>&lt;CCol sm=&#34;7&#34;&gt;</code>.
             </p>
             <DocsExample href="forms/layout#column-sizing">
@@ -277,7 +277,7 @@ const Layout = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              The example below uses a flexbox utility to vertically center the contents and changes{' '}
+              The example below uses a flexbox utility to vertically center the contents and changes{" "}
               <code>&lt;CCol&gt;</code> to <code>&lt;CCol xs=&#34;auto&#34;&gt;</code> so that your
               columns only take up as much space as needed. Put another way, the column sizes itself
               based on the contents.
@@ -368,10 +368,10 @@ const Layout = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               Use the <code>&lt;CCol xs=&#34;auto&#34;&gt;</code> class to create horizontal
-              layouts. By adding{' '}
+              layouts. By adding{" "}
               <a href="https://coreui.io/docs/layout/gutters/">gutter modifier classes</a>, we will
-              have gutters in horizontal and vertical directions. The{' '}
-              <code>.align-items-center</code> aligns the form elements to the middle, making the{' '}
+              have gutters in horizontal and vertical directions. The{" "}
+              <code>.align-items-center</code> aligns the form elements to the middle, making the{" "}
               <code>&lt;CFormCheck&gt;</code> align properly.
             </p>
             <DocsExample href="forms/layout#inline-forms">

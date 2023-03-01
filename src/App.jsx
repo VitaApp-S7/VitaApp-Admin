@@ -1,10 +1,10 @@
-import React, { Children, Component, Suspense, useContext, useState } from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
-import './scss/style.scss'
-import { useIsAuthenticated } from '@azure/msal-react'
-import Login from './views/pages/login/Login';
-import DefaultLayout from './layout/DefaultLayout';
-import PropTypes from 'prop-types';
+import React, { Suspense } from "react"
+import { HashRouter, Route, Routes } from "react-router-dom"
+import "./scss/style.scss"
+import { useIsAuthenticated } from "@azure/msal-react"
+import Login from "./views/pages/login/Login"
+import DefaultLayout from "./layout/DefaultLayout"
+import PropTypes from "prop-types"
 
 const loading = (
   <div className="pt-3 text-center">
@@ -12,22 +12,20 @@ const loading = (
   </div>
 )
 
-const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
-const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
+const Page404 = React.lazy(() => import("./views/pages/page404/Page404"))
+const Page500 = React.lazy(() => import("./views/pages/page500/Page500"))
 
 function App() {
-  const isAuthenticated = useIsAuthenticated();
+  const isAuthenticated = useIsAuthenticated()
 
   const ProtectedRoute = ({ children }) => {
     if (!isAuthenticated) {
       return <Login />
     }
     return children
-  };
+  }
 
-  ProtectedRoute.propTypes = {
-    children: PropTypes.node.isRequired
-  };
+  ProtectedRoute.propTypes = { children: PropTypes.node.isRequired }
 
   return (
     <HashRouter>
@@ -40,7 +38,7 @@ function App() {
         </Routes>
       </Suspense>
     </HashRouter>
-  );
+  )
 }
 
 export default App

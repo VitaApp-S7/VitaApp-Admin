@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CButton,
   CCard,
@@ -9,9 +9,9 @@ import {
   CFormInput,
   CFormLabel,
   CFormTextarea,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const FormControl = () => {
   return (
@@ -48,7 +48,7 @@ const FormControl = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Set heights using <code>size</code> property like <code>size=&#34;lg&#34;</code> and{' '}
+              Set heights using <code>size</code> property like <code>size=&#34;lg&#34;</code> and{" "}
               <code>size=&#34;sm&#34;</code>.
             </p>
             <DocsExample href="forms/form-control#sizing">

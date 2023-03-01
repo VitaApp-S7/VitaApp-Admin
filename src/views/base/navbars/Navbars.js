@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 import {
   CCard,
   CCardBody,
@@ -17,14 +17,14 @@ import {
   CNavbarToggler,
   CNavLink,
   CDropdown,
-  CButton,
-} from '@coreui/react'
-import { DocsLink } from 'src/components'
+  CButton
+} from "@coreui/react"
+import { DocsLink } from "src/components"
 
 const CNavbars = () => {
-  const [visible, setVisible] = useState(false)
-  const [isOpenDropdown, setIsOpenDropdown] = useState(false)
-  const [navbarText, setNavbarText] = useState(false)
+  const [ visible, setVisible ] = useState(false)
+  const [ isOpenDropdown, setIsOpenDropdown ] = useState(false)
+  const [ navbarText, setNavbarText ] = useState(false)
 
   return (
     <>

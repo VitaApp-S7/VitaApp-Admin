@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CBadge,
   CCard,
@@ -8,9 +8,9 @@ import {
   CFormCheck,
   CListGroup,
   CListGroupItem,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const ListGroups = () => {
   return (
@@ -88,10 +88,10 @@ const ListGroups = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Use <code>&lt;a&gt;</code>s or <code>&lt;button&gt;</code>s to create{' '}
-              <em>actionable</em> list group items with hover, disabled, and active states by adding{' '}
+              Use <code>&lt;a&gt;</code>s or <code>&lt;button&gt;</code>s to create{" "}
+              <em>actionable</em> list group items with hover, disabled, and active states by adding{" "}
               <code>component=&#34;a|button&#34;</code>. We separate these pseudo-classes to ensure
-              list groups made of non-interactive elements (like <code>&lt;li&gt;</code>s or{' '}
+              list groups made of non-interactive elements (like <code>&lt;li&gt;</code>s or{" "}
               <code>&lt;div&gt;</code>
               s) don&#39;tprovide a click or tap affordance.
             </p>
@@ -148,13 +148,13 @@ const ListGroups = () => {
             <p className="text-medium-emphasis small">
               Add <code>layout=&#34;horizontal&#34;</code> to change the layout of list group items
               from vertical to horizontal across all breakpoints. Alternatively, choose a responsive
-              variant <code>.layout=&#34;horizontal-&#123;sm | md | lg | xl | xxl&#125;&#34;</code>{' '}
-              to make a list group horizontal starting at that breakpoint&#39;s{' '}
-              <code>min-width</code>. Currently{' '}
+              variant <code>.layout=&#34;horizontal-&#123;sm | md | lg | xl | xxl&#125;&#34;</code>{" "}
+              to make a list group horizontal starting at that breakpoint&#39;s{" "}
+              <code>min-width</code>. Currently{" "}
               <strong>horizontal list groups cannot be combined with flush list groups.</strong>
             </p>
             <DocsExample href="components/list-group/#flush">
-              {['', '-sm', '-md', '-lg', '-xl', '-xxl'].map((breakpoint, index) => (
+              {[ "", "-sm", "-md", "-lg", "-xl", "-xxl" ].map((breakpoint, index) => (
                 <CListGroup className="mb-2" layout={`horizontal${breakpoint}`} key={index}>
                   <CListGroupItem>Cras justo odio</CListGroupItem>
                   <CListGroupItem>Dapibus ac facilisis in</CListGroupItem>
@@ -178,14 +178,14 @@ const ListGroups = () => {
               <CListGroup>
                 <CListGroupItem>Dapibus ac facilisis in</CListGroupItem>
                 {[
-                  'primary',
-                  'secondary',
-                  'success',
-                  'danger',
-                  'warning',
-                  'info',
-                  'light',
-                  'dark',
+                  "primary",
+                  "secondary",
+                  "success",
+                  "danger",
+                  "warning",
+                  "info",
+                  "light",
+                  "dark"
                 ].map((color, index) => (
                   <CListGroupItem color={color} key={index}>
                     A simple {color} list group item
@@ -194,7 +194,7 @@ const ListGroups = () => {
               </CListGroup>
             </DocsExample>
             <p className="text-medium-emphasis small">
-              Contextual classes also work with <code>&lt;a&gt;</code>s or{' '}
+              Contextual classes also work with <code>&lt;a&gt;</code>s or{" "}
               <code>&lt;button&gt;</code>s. Note the addition of the hover styles here not present
               in the previous example. Also supported is the <code>active</code> state; apply it to
               indicate an active selection on a contextual list group item.
@@ -205,14 +205,14 @@ const ListGroups = () => {
                   Dapibus ac facilisis in
                 </CListGroupItem>
                 {[
-                  'primary',
-                  'secondary',
-                  'success',
-                  'danger',
-                  'warning',
-                  'info',
-                  'light',
-                  'dark',
+                  "primary",
+                  "secondary",
+                  "success",
+                  "danger",
+                  "warning",
+                  "info",
+                  "light",
+                  "dark"
                 ].map((color, index) => (
                   <CListGroupItem component="a" href="#" color={color} key={index}>
                     A simple {color} list group item

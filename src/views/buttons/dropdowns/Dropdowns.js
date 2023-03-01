@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
   CButton,
   CButtonGroup,
@@ -11,9 +11,9 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-  CRow,
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
+  CRow
+} from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const Dropdowns = () => {
   return (
@@ -25,7 +25,7 @@ const Dropdowns = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Here&#39;s how you can put them to work with either <code>&lt;button&gt;</code>{' '}
+              Here&#39;s how you can put them to work with either <code>&lt;button&gt;</code>{" "}
               elements:
             </p>
             <DocsExample href="components/dropdown#single-button">
@@ -43,7 +43,7 @@ const Dropdowns = () => {
             </p>
             <DocsExample href="components/dropdown#single-button">
               <>
-                {['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map(
+                {[ "primary", "secondary", "success", "info", "warning", "danger" ].map(
                   (color, index) => (
                     <CDropdown variant="btn-group" key={index}>
                       <CDropdownToggle color={color}>{color}</CDropdownToggle>
@@ -55,7 +55,7 @@ const Dropdowns = () => {
                         <CDropdownItem href="#">Separated link</CDropdownItem>
                       </CDropdownMenu>
                     </CDropdown>
-                  ),
+                  )
                 )}
               </>
             </DocsExample>
@@ -81,7 +81,7 @@ const Dropdowns = () => {
             </p>
             <DocsExample href="components/dropdown#split-button">
               <>
-                {['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map(
+                {[ "primary", "secondary", "success", "info", "warning", "danger" ].map(
                   (color, index) => (
                     <CDropdown variant="btn-group" key={index}>
                       <CButton color={color}>{color}</CButton>
@@ -94,7 +94,7 @@ const Dropdowns = () => {
                         <CDropdownItem href="#">Separated link</CDropdownItem>
                       </CDropdownMenu>
                     </CDropdown>
-                  ),
+                  )
                 )}
               </>
             </DocsExample>
@@ -175,7 +175,7 @@ const Dropdowns = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Opt into darker dropdowns to match a dark navbar or custom style by set{' '}
+              Opt into darker dropdowns to match a dark navbar or custom style by set{" "}
               <code>dark</code> property. No changes are required to the dropdown items.
             </p>
             <DocsExample href="components/dropdown#dark-dropdowns">
@@ -235,8 +235,8 @@ const Dropdowns = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Trigger dropdown menus above elements by adding{' '}
-              <code>direction=&#34;dropup&#34;</code> to the <code>&lt;CDropdown&gt;</code>{' '}
+              Trigger dropdown menus above elements by adding{" "}
+              <code>direction=&#34;dropup&#34;</code> to the <code>&lt;CDropdown&gt;</code>{" "}
               component.
             </p>
             <DocsExample href="components/dropdown#dropup">
@@ -272,8 +272,8 @@ const Dropdowns = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Trigger dropdown menus at the right of the elements by adding{' '}
-              <code>direction=&#34;dropend&#34;</code> to the <code>&lt;CDropdown&gt;</code>{' '}
+              Trigger dropdown menus at the right of the elements by adding{" "}
+              <code>direction=&#34;dropend&#34;</code> to the <code>&lt;CDropdown&gt;</code>{" "}
               component.
             </p>
             <DocsExample href="components/dropdown#dropright">
@@ -309,8 +309,8 @@ const Dropdowns = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Trigger dropdown menus at the left of the elements by adding{' '}
-              <code>direction=&#34;dropstart&#34;</code> to the <code>&lt;CDropdown&gt;</code>{' '}
+              Trigger dropdown menus at the left of the elements by adding{" "}
+              <code>direction=&#34;dropstart&#34;</code> to the <code>&lt;CDropdown&gt;</code>{" "}
               component.
             </p>
             <DocsExample href="components/dropdown#dropleft">

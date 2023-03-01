@@ -1,6 +1,6 @@
-import React from 'react'
-import { CCard, CCardBody, CCardHeader, CCol, CProgress, CProgressBar, CRow } from '@coreui/react'
-import { DocsExample } from 'src/components'
+import React from "react"
+import { CCard, CCardBody, CCardHeader, CCol, CProgress, CProgressBar, CRow } from "@coreui/react"
+import { DocsExample } from "src/components"
 
 const Progress = () => {
   return (
@@ -13,7 +13,7 @@ const Progress = () => {
           <CCardBody>
             <p className="text-medium-emphasis small">
               Progress components are built with two HTML elements, some CSS to set the width, and a
-              few attributes. We don&#39;tuse{' '}
+              few attributes. We don&#39;tuse{" "}
               <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress">
                 the HTML5 <code>&lt;progress&gt;</code> element
               </a>
@@ -46,7 +46,7 @@ const Progress = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Add labels to your progress bars by placing text within the{' '}
+              Add labels to your progress bars by placing text within the{" "}
               <code>&lt;CProgressBar&gt;</code>.
             </p>
             <DocsExample href="components/progress#labels">
@@ -158,7 +158,7 @@ const Progress = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              The striped gradient can also be animated. Add <code>animated</code> property to{' '}
+              The striped gradient can also be animated. Add <code>animated</code> property to{" "}
               <code>&lt;CProgressBar&gt;</code> to animate the stripes right to left via CSS3
               animations.
             </p>
