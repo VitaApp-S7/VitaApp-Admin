@@ -67,10 +67,10 @@ export const loginRequest = { scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc2
 //     graphMeEndpoint: "Enter_the_Graph_Endpoint_Here/v1.0/me"
 // };
 
-const baseUrl = "http://localhost:5000"
+//const baseUrl = "http://localhost:5000"
 
 //CLOUD
-//const baseUrl = "http://vitaappgw.northeurope.cloudapp.azure.com";
+const baseUrl = "http://vitaappgw.northeurope.cloudapp.azure.com";
 
 export const protectedResources = {
   graphMe: {
