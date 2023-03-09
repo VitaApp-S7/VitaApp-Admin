@@ -3,6 +3,8 @@ import { getNews, createNews, deleteNewsById } from "../../services/newsService"
 import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormTextarea, CFormInput, CFormLabel } from "@coreui/react"
 import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
+import RichTextEditor from "../../components/RichTextEditor"
+//import Trix from "trix";
 
 const Feed = () => {
   const { instance, accounts } = useMsal()
@@ -135,7 +137,9 @@ const Feed = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
             <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="20" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Description</CFormLabel>
-            <CFormTextarea placeholder="" value={textField2} id="exampleFormControlTextarea1" maxLength="1000" onChange={(e) => setTextField2(e.target.value)} ></CFormTextarea>
+            
+            <RichTextEditor placeholder="" value={textField2} id="exampleFormControlTextarea1" maxLength="1000" onChange={(e) => setTextField2(e.target.value)} ></RichTextEditor>
+
             <CFormLabel htmlFor="exampleFormControlTextarea1">Link</CFormLabel>
             <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea1" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
           </form>
