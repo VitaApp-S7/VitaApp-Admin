@@ -7,10 +7,6 @@ import RichTextEditor from "../../components/RichTextEditor"
 import Trix from "trix";
 
 
-document.addEventListener("trix-before-initialize", () => {
-  // Change Trix.config if you need
-})
-
 const Feed = () => {
   const { instance, accounts } = useMsal()
   const [ accessToken, setAccessToken ] = useState(null)
@@ -130,6 +126,7 @@ const Feed = () => {
     console.log(news.data)
   }
 
+  
 
   return (
     <>
@@ -146,7 +143,7 @@ const Feed = () => {
             <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="20" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea2">Description</CFormLabel>
             
-            <RichTextEditor value={textField2} onChange={console.log("testt")} />
+            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
 
             <CFormLabel htmlFor="exampleFormControlTextarea3">Link</CFormLabel>
             <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea3" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>

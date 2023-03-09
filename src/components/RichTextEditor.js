@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Trix from "trix";
 
-class RichTextEditor extends React.Component {
+class RichTextEditor extends Component {
     constructor(props) {
         super(props);
         this.trixInput = React.createRef();
@@ -24,4 +24,4 @@ class RichTextEditor extends React.Component {
     }
 }
 
-export default RichTextEditor;
+export default React.memo(RichTextEditor);
