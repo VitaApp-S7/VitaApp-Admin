@@ -4,7 +4,12 @@ import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader,
 import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
 import RichTextEditor from "../../components/RichTextEditor"
-//import Trix from "trix";
+import Trix from "trix";
+
+
+document.addEventListener("trix-before-initialize", () => {
+  // Change Trix.config if you need
+})
 
 const Feed = () => {
   const { instance, accounts } = useMsal()
@@ -118,11 +123,14 @@ const Feed = () => {
 
   }
 
+  
   const handleActivities = async () => {
     var news = await getNews(accessToken)
     setData(await news.data)
     console.log(news.data)
   }
+
+
   return (
     <>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -136,12 +144,12 @@ const Feed = () => {
           <form>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
             <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="20" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
-            <CFormLabel htmlFor="exampleFormControlTextarea1">Description</CFormLabel>
+            <CFormLabel htmlFor="exampleFormControlTextarea2">Description</CFormLabel>
             
-            <RichTextEditor placeholder="" value={textField2} id="exampleFormControlTextarea1" maxLength="1000" onChange={(e) => setTextField2(e.target.value)} ></RichTextEditor>
+            <RichTextEditor value={textField2} onChange={console.log("testt")} />
 
-            <CFormLabel htmlFor="exampleFormControlTextarea1">Link</CFormLabel>
-            <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea1" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
+            <CFormLabel htmlFor="exampleFormControlTextarea3">Link</CFormLabel>
+            <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea3" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
           </form>
         </CModalBody>
         <CModalFooter>
@@ -157,7 +165,9 @@ const Feed = () => {
       </CListGroup>
     </>
   )
+  
 }
+
 const buttons = { margin: "10px" }
 
 export default Feed
