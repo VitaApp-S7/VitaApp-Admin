@@ -22,13 +22,12 @@ export async function deleteActivityById(id, token) {
   return response.data
 }
 export async function updateActivity(activity, token) {
+  if(activity.category == null){
+    alert("Can't update without a category")
+    throw new Error("Can't update without a category")
+  }
   var response = await axios.put(`${url}update`, {
-    category: {
-      id: null,
-      name: activity.category,
-      source: [ "Object" ],
-      target: [ "Object" ]
-    },
+    category: activity.category,
     id: activity.id,
     description: activity.description,
     points: activity.points,
@@ -39,15 +38,14 @@ export async function updateActivity(activity, token) {
 }
 
 export async function createActivity(data, token) {
+  if(data.category == null){
+    alert("Can't update without a category")
+    throw new Error("Can't update without a category")
+  }
   var response = await axios.post(
     url,
     {
-      category: {
-        id: null,
-        name: data.category,
-        source: [ "Object" ],
-        target: [ "Object" ]
-      },
+      category: data.category,
       description: data.description,
       points: data.points,
       status: "ACTIVE",
