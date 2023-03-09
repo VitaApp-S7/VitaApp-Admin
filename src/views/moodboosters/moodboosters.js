@@ -120,7 +120,7 @@ const Moodboosters = () => {
     const postData = {
       title: textField1,
       description: textField2,
-      category: textField3,
+      category: catagories.find(x => x.id == textField3),
       points: textField4
     }
     try {
