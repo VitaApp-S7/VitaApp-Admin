@@ -3,12 +3,14 @@ import {
   createActivity,
   deleteActivityById,
   getAllActivities,
-  updateActivity
+  updateActivity,
+  getAllCategories
 } from "../../services/moodboosterService"
 import {
   CButton,
   CFormInput,
   CFormLabel,
+  CFormSelect,
   CListGroup,
   CListGroupItem,
   CModal,
@@ -24,6 +26,7 @@ const Moodboosters = () => {
   const { instance, accounts } = useMsal()
   const [ accessToken, setAccessToken ] = useState(null)
   const [ data, setData ] = useState([])
+  const [ catagories, setCatagories ] = useState([])
   const [ deleteData, setDeleteData ] = useState("")
   const [ editData, setEditData ] = useState("")
   const [ isOpen, setIsOpen ] = useState(false)
@@ -74,7 +77,7 @@ const Moodboosters = () => {
 
     setTextEditField1(item.item.title)
     setTextEditField2(item.item.description)
-    setTextEditField3(item.item.category.name)
+    setTextEditField3(item.item.category.id)
     setTextEditField4(item.item.points)
     setTextEditId(item.item.id)
     setEditModalVisible(true)
@@ -117,32 +120,37 @@ const Moodboosters = () => {
     const postData = {
       title: textField1,
       description: textField2,
-      category: textField3,
+      category: catagories.find(x => x.id == textField3),
       points: textField4
     }
     try {
       await createActivity(postData, accessToken)
       setIsOpen(false)
       handleCancel()
+      await handleCatagory()
       await handleActivities()
     } catch (error) {
       console.error("Error:", error)
     }
   }
   const handleUpdate = async () => {
+
     const postData = {
       id: textEditId,
       title: textEditField1,
       description: textEditField2,
-      category: textEditField3,
+      category: catagories.find(x => x.id == textEditField3),
       points: textEditField4,
       status: "ACTIVE"
     }
+
+    console.log(postData)
     try {
       await updateActivity(postData, accessToken)
       setIsOpen(false)
       handleCancel()
       await handleActivities()
+      await handleCatagory()
     } catch (error) {
       console.error("Error:", error)
     }
@@ -173,6 +181,7 @@ const Moodboosters = () => {
       .then(() => {
         if (accessToken) {
           handleActivities()
+          handleCatagory()
         }
         // eslint-disable-next-line no-unused-vars
       })
@@ -194,6 +203,12 @@ const Moodboosters = () => {
     var activities = await getAllActivities(accessToken)
     setData(await activities)
     console.log(activities)
+  }
+
+  const handleCatagory = async () => {
+    var catagories = await getAllCategories(accessToken)
+    setCatagories(await catagories)
+    console.log(catagories)
   }
   return (
     <>
@@ -228,12 +243,20 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Category
             </CFormLabel>
-            <CFormInput
+            {/* <CFormInput
               placeholder=""
               value={textField3}
               id="exampleFormControlTextarea1"
               onChange={(e) => setTextField3(e.target.value)}
-            ></CFormInput>
+            ></CFormInput> */}
+            <CFormSelect aria-label="Default select example"
+              key="exampleFormControlTextarea1"
+              value={textField3}
+              onChange={(e) => setTextField3(e.target.value)}>
+              <option>Choose a category</option>
+              {catagories.map((item, index) => (
+                <option key={index} value={item.id}>{item.name}</option>))}
+            </CFormSelect>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Points
             </CFormLabel>
@@ -286,12 +309,20 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Category
             </CFormLabel>
-            <CFormInput
+            {/* <CFormInput
               placeholder=""
               value={textEditField3}
               id="exampleFormControlTextarea1"
               onChange={(e) => setTextEditField3(e.target.value)}
-            ></CFormInput>
+            ></CFormInput> */}
+            <CFormSelect aria-label="Default select example"
+              key="exampleFormControlTextarea1"
+              value={textEditField3}
+              onChange={(e) => setTextEditField3(e.target.value)}>
+              <option>Choose a category</option>
+              {catagories.map((item, index) => (
+                <option key={index} value={item.id}>{item.name}</option>))}
+            </CFormSelect>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Points
             </CFormLabel>
