@@ -18,7 +18,7 @@ class RichTextEditor extends Component {
         return (
             <div>
                 <input type="hidden" id="trix" value={this.props.value} />
-                <trix-editor maxlength="10" input="trix" ref={this.trixInput} />
+                <trix-editor input="trix" ref={this.trixInput} />
             </div>
         );
     }
