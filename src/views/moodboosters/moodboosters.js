@@ -238,6 +238,7 @@ const Moodboosters = () => {
               placeholder=""
               value={textField1}
               id="exampleFormControlTextarea1"
+              maxLength="50"
               onChange={(e) => setTextField1(e.target.value)}
             ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
