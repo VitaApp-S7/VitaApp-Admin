@@ -94,7 +94,7 @@ const Moodboosters = () => {
   const DeleteModal = () => {
     const item = deleteData.item
     return (
-      <CModal visible={deleteModalVisible} onClose={handleCancel}>
+      <CModal visible={deleteModalVisible} onClose={handleCancel} backdrop="static">
         <CModalHeader>
           <CModalTitle>
             Are you sure you want to delete this moodbooster?
@@ -157,6 +157,14 @@ const Moodboosters = () => {
   }
 
   const handleCancel = () => {
+    setTextField1("")
+    setTextField2("")
+    setTextField3("")
+    setTextField4("")
+    setTextEditField1("")
+    setTextEditField2("")
+    setTextEditField3("")
+    setTextEditField4("")
     setIsOpen(false)
     setDeleteModalVisible(false)
     setEditModalVisible(false)
@@ -217,7 +225,7 @@ const Moodboosters = () => {
           New moodbooster
         </CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel}>
+      <CModal visible={isOpen} onClose={handleCancel} backdrop="static">
         <CModalHeader closeButton>
           <h5>New moodbooster</h5>
         </CModalHeader>
@@ -281,7 +289,7 @@ const Moodboosters = () => {
         </CModalFooter>
       </CModal>
       {/* Begin Edit */}
-      <CModal visible={editModalVisible} onClose={handleCancel}>
+      <CModal visible={editModalVisible} onClose={handleCancel} backdrop="static">
         <CModalHeader closeButton>
           <h5>Edit moodbooster</h5>
         </CModalHeader>
