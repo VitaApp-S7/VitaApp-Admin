@@ -55,6 +55,7 @@ const Feed = () => {
       <CModal
         visible={deleteModalVisible}
         onClose={handleCancel}
+        backdrop="static"
       >
         <CModalHeader>
           <CModalTitle>Are you sure you want to delete this event?</CModalTitle>
@@ -131,7 +132,7 @@ const Feed = () => {
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
         <CButton color="dark" style={buttons} onClick={() => setIsOpen(true)}>New event</CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel} style={{ minWidth: "700px" }}>
+      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" style={{ minWidth: "700px" }}>
         <CModalHeader closeButton>
           <h5>New event</h5>
         </CModalHeader>
