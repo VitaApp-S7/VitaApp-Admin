@@ -3,6 +3,8 @@ import { getNews, createNews, deleteNewsById } from "../../services/newsService"
 import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormTextarea, CFormInput, CFormLabel } from "@coreui/react"
 import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
+import RichTextEditor from "../../components/RichTextEditor"
+import RichTextListItem from "../../components/RichTextListItem"
 
 const Feed = () => {
   const { instance, accounts } = useMsal()
@@ -22,7 +24,7 @@ const Feed = () => {
     return (
       <CListGroupItem>
         <h4>{item.item.title}</h4>
-        <h6>{item.item.description}</h6>
+        <RichTextListItem item={{ __html: item.item.description }} />
         <p>{item.item.url}</p>
         <div style={buttons} className="d-grid gap-2 d-md-flex justify-content-md-end">
           <CButton color="dark" variant="outline" className="float-right" onClick={() => onEdit(item)}>Edit</CButton>
@@ -116,29 +118,32 @@ const Feed = () => {
     })
 
   }
-
+  
   const handleActivities = async () => {
     var news = await getNews(accessToken)
     setData(await news.data)
     console.log(news.data)
   }
+
   return (
     <>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
         <CButton color="dark" style={buttons} onClick={() => setIsOpen(true)}>New item</CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel} backdrop="static">
+      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" style={{ minWidth: "700px" }}>
         <CModalHeader closeButton>
           <h5>New Item</h5>
         </CModalHeader>
         <CModalBody>
           <form>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
-            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="20" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
-            <CFormLabel htmlFor="exampleFormControlTextarea1">Description</CFormLabel>
-            <CFormTextarea placeholder="" value={textField2} id="exampleFormControlTextarea1" maxLength="1000" onChange={(e) => setTextField2(e.target.value)} ></CFormTextarea>
-            <CFormLabel htmlFor="exampleFormControlTextarea1">Link</CFormLabel>
-            <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea1" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
+            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
+            <CFormLabel htmlFor="exampleFormControlTextarea2">Description</CFormLabel>
+            
+            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
+
+            <CFormLabel htmlFor="exampleFormControlTextarea3">Link</CFormLabel>
+            <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea3" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
           </form>
         </CModalBody>
         <CModalFooter>
@@ -155,6 +160,7 @@ const Feed = () => {
     </>
   )
 }
+
 const buttons = { margin: "10px" }
 
 export default Feed
