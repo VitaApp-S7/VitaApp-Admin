@@ -4,8 +4,7 @@ import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader,
 import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
 import RichTextEditor from "../../components/RichTextEditor"
-import Trix from "trix";
-
+import RichTextListItem from "../../components/RichTextListItem"
 
 const Feed = () => {
   const { instance, accounts } = useMsal()
@@ -25,7 +24,7 @@ const Feed = () => {
     return (
       <CListGroupItem>
         <h4>{item.item.title}</h4>
-        <h6>{item.item.description}</h6>
+        <RichTextListItem item={{ __html: item.item.description }} />
         <p>{item.item.url}</p>
         <div style={buttons} className="d-grid gap-2 d-md-flex justify-content-md-end">
           <CButton color="dark" variant="outline" className="float-right" onClick={() => onEdit(item)}>Edit</CButton>
@@ -118,7 +117,6 @@ const Feed = () => {
     })
 
   }
-
   
   const handleActivities = async () => {
     var news = await getNews(accessToken)
@@ -126,21 +124,19 @@ const Feed = () => {
     console.log(news.data)
   }
 
-  
-
   return (
     <>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
         <CButton color="dark" style={buttons} onClick={() => setIsOpen(true)}>New item</CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel}>
+      <CModal visible={isOpen} onClose={handleCancel} style={{ minWidth: "700px" }}>
         <CModalHeader closeButton>
           <h5>New Item</h5>
         </CModalHeader>
         <CModalBody>
           <form>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
-            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="20" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
+            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea2">Description</CFormLabel>
             
             <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
@@ -162,7 +158,6 @@ const Feed = () => {
       </CListGroup>
     </>
   )
-  
 }
 
 const buttons = { margin: "10px" }

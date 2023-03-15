@@ -19,6 +19,8 @@ import {
 } from "@coreui/react"
 import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
+import RichTextEditor from "../../components/RichTextEditor"
+import RichTextListItem from "../../components/RichTextListItem"
 
 const Moodboosters = () => {
   const { instance, accounts } = useMsal()
@@ -44,7 +46,7 @@ const Moodboosters = () => {
     return (
       <CListGroupItem>
         <b>{item.item.title}</b>
-        <p>{item.item.description}</p>
+        <RichTextListItem item={{ __html: item.item.description }} />
         <div
           style={buttons}
           className="d-grid gap-2 d-md-flex justify-content-md-end"
@@ -202,7 +204,7 @@ const Moodboosters = () => {
           New moodbooster
         </CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel}>
+      <CModal visible={isOpen} onClose={handleCancel} style={{ minWidth: "700px" }}>
         <CModalHeader closeButton>
           <h5>New moodbooster</h5>
         </CModalHeader>
@@ -218,13 +220,7 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Description
             </CFormLabel>
-            <CFormInput
-              placeholder=""
-              value={textField2}
-              id="exampleFormControlTextarea1"
-              maxLength="50"
-              onChange={(e) => setTextField2(e.target.value)}
-            ></CFormInput>
+            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Category
             </CFormLabel>
@@ -269,6 +265,7 @@ const Moodboosters = () => {
             </CFormLabel>
             <CFormInput
               placeholder=""
+              maxLength="50"
               value={textEditField1}
               id="exampleFormControlTextarea1"
               onChange={(e) => setTextEditField1(e.target.value)}
@@ -276,13 +273,7 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Description
             </CFormLabel>
-            <CFormInput
-              placeholder=""
-              value={textEditField2}
-              id="exampleFormControlTextarea1"
-              maxLength="50"
-              onChange={(e) => setTextEditField2(e.target.value)}
-            ></CFormInput>
+            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Category
             </CFormLabel>
