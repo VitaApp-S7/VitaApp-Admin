@@ -9,7 +9,6 @@ class RichTextEditor extends Component {
 
     componentDidMount() {
         this.trixInput.current.addEventListener("trix-change", event => {
-            console.log("trix change event fired");
             this.props.onChange(event.target.innerHTML); //calling custom event
         });
     }
