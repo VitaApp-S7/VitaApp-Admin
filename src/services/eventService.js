@@ -37,11 +37,10 @@ export async function deleteEventById(id, token) {
 }
 export async function createEvent(data, token) {
   var response = await axios.post(
-    `${url  }/add`,
+    `${url}/add`,
     {
       id: null,
       title: data.title,
-      url: data.url,
       description: data.description,
       date: null,
       userIds: [ null ]

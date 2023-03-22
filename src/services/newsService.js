@@ -14,6 +14,7 @@ export async function createNews(data, token) {
     {
       id: null,
       title: data.title,
+      url: data.link,
       description: data.description,
       date: Date.now()
     },
@@ -26,8 +27,7 @@ export async function updateNews(news, token) {
   var response = await axios.put(`${url}update`, {
     id: news.id,
     title: news.title,
-    description: news.description,
-    date: news.date
+    description: news.description
     
   }, { headers: { Authorization: `Bearer ${token}` }})
   return response.data
