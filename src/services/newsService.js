@@ -22,6 +22,17 @@ export async function createNews(data, token) {
   )
   return response.data
 }
+
+export async function updateNews(news, token) {
+  var response = await axios.put(`${url}update`, {
+    id: news.id,
+    title: news.title,
+    description: news.description
+    
+  }, { headers: { Authorization: `Bearer ${token}` }})
+  return response.data
+}
+
 export async function deleteNewsById(id, token) {
   var response = await axios.delete(url + id, { headers: { Authorization: `Bearer ${token}` }})
   return response.data

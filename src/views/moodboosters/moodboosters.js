@@ -305,7 +305,7 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Description
             </CFormLabel>
-            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
+            <RichTextEditor value={textEditField2} onChange={(value) => setTextEditField2(value)}/>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Category
             </CFormLabel>

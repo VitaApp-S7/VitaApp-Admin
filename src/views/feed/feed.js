@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getNews, createNews, deleteNewsById } from "../../services/newsService"
+import { getNews, createNews, updateNews, deleteNewsById } from "../../services/newsService"
 import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormTextarea, CFormInput, CFormLabel } from "@coreui/react"
 import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
@@ -12,13 +12,14 @@ const Feed = () => {
   const [ data, setData ] = useState([])
   const [ deleteData, setDeleteData ] = useState("")
   const [ isOpen, setIsOpen ] = useState(false)
-  // const [ title, setTitle ] = useState("")
+  const [ editData, setEditData ] = useState("")
   const [ textField1, setTextField1 ] = useState("")
   const [ textField2, setTextField2 ] = useState("")
-  const [ textField3, setTextField3 ] = useState("")
-  const [ textField4, setTextField4 ] = useState("")
+  const [ textEditField1, setTextEditField1 ] = useState("")
+  const [ textEditField2, setTextEditField2 ] = useState("")
+  const [ textEditId, setTextEditId ] = useState("")
   const [ deleteModalVisible, setDeleteModalVisible ] = useState(false)
-  // const name = accounts[0] && accounts[0].name
+  const [ editModalVisible, setEditModalVisible ] = useState(false)
 
   const ListItem = (item) => {
     return (
@@ -35,7 +36,12 @@ const Feed = () => {
   }
   // eslint-disable-next-line no-unused-vars
   const onEdit = (item) => {
+    setEditData(item)
 
+    setTextEditField1(item.item.title)
+    setTextEditField2(item.item.description)
+    setTextEditId(item.item.id)
+    setEditModalVisible(true)
   }
   const onDelete = (item) => {
     setDeleteData(item)
@@ -68,14 +74,12 @@ const Feed = () => {
     const postData = {
       title: textField1,
       description: textField2,
-      link: textField3
     }
     try {
       await createNews(postData, accessToken)
       setIsOpen(false)
       setTextField1("")
       setTextField2("")
-      setTextField3("")
       handleActivities()
     } catch (error) {
       console.error("Error:", error)
@@ -84,9 +88,29 @@ const Feed = () => {
   const handleCancel = () => {
     setTextField1("")
     setTextField2("")
-    setTextField3("")
     setIsOpen(false)
     setDeleteModalVisible(false)
+    setEditModalVisible(false)
+  }
+
+  const handleUpdate = async () => {
+
+    const UpdateNews = {
+      
+      id: textEditId,
+      title: textEditField1,
+      description: textEditField2
+    }
+
+    console.log(UpdateNews)
+    try {
+      await updateNews(UpdateNews, accessToken)
+      setIsOpen(false)
+      handleCancel()
+      await handleActivities()
+    } catch (error) {
+      console.error("Error:", error)
+    }
   }
 
   useEffect(() => {
@@ -130,7 +154,7 @@ const Feed = () => {
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
         <CButton color="dark" style={buttons} onClick={() => setIsOpen(true)}>New item</CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" style={{ minWidth: "700px" }}>
+      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" className="modal-lg">
         <CModalHeader closeButton>
           <h5>New Item</h5>
         </CModalHeader>
@@ -139,11 +163,7 @@ const Feed = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
             <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea2">Description</CFormLabel>
-            
             <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
-
-            <CFormLabel htmlFor="exampleFormControlTextarea3">Link</CFormLabel>
-            <CFormInput placeholder="https://www.gac.nl/" value={textField3} id="exampleFormControlTextarea3" onChange={(e) => setTextField3(e.target.value)} ></CFormInput>
           </form>
         </CModalBody>
         <CModalFooter>
@@ -151,6 +171,39 @@ const Feed = () => {
           <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
         </CModalFooter>
       </CModal>
+      {/* Begin Edit */}
+      <CModal visible={editModalVisible} onClose={handleCancel} backdrop="static" className="modal-lg">
+        <CModalHeader closeButton>
+          <h5>Edit news item</h5>
+        </CModalHeader>
+        <CModalBody>
+          <form>
+            <CFormLabel htmlFor="exampleFormControlTextarea1">
+              Title
+            </CFormLabel>
+            <CFormInput
+              placeholder=""
+              maxLength="50"
+              value={textEditField1}
+              id="exampleFormControlTextarea1"
+              onChange={(e) => setTextEditField1(e.target.value)}
+            ></CFormInput>
+            <CFormLabel htmlFor="exampleFormControlTextarea1">
+              Description
+            </CFormLabel>
+            <RichTextEditor value={textEditField2} onChange={(value) => setTextEditField2(value)}/>
+          </form>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="primary" onClick={handleUpdate}>
+            Save
+          </CButton>
+          <CButton color="secondary" onClick={handleCancel}>
+            Cancel
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      {/* End Edit */}
       <DeleteModal />
       <CListGroup>
         {data.map((item, index) => (

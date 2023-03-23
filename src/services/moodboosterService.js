@@ -13,7 +13,6 @@ export async function startActivity(id, token) {
 }
 
 export async function getAllActivities(token) {
-  // console.log(token)
   var response = await axios.get(`${url  }active`, { headers: { Authorization: `Bearer ${token}` }})
   return response.data
 }
