@@ -29,6 +29,13 @@ const _nav = [
     icon: <CIcon icon={cilGlobeAlt
     } customClassName="nav-icon" />,
     badge: { color: "info" }
+  },
+  {
+    component: CNavItem,
+    name: "Challenges",
+    to: "/challenges",
+    icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
+    badge: { color: "info" }
   }
   // {
   //   component: CNavItem,
