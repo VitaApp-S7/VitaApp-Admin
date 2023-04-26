@@ -5,6 +5,8 @@ import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
 import RichTextEditor from "../../components/RichTextEditor"
 import RichTextListItem from "../../components/RichTextListItem"
+import DisplayImage from "../../components/DisplayImage"
+import { uploadImage } from "src/services/imageService"
 
 const Feed = () => {
   const { instance, accounts } = useMsal()
@@ -20,6 +22,23 @@ const Feed = () => {
   const [ textEditField2, setTextEditField2 ] = useState("")
   const [ textEditId, setTextEditId ] = useState("")
   const [ editData, setEditData ] = useState("")
+
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+   const handleUploadClick = async () => {
+     if (!file) {
+       return;
+     }
+
+     const formData = new FormData();
+     formData.append('image', file);
+
+     await uploadImage(formData, accessToken);
+   }
 
   let newArray = new Array
   const ListItem = (item) => {
@@ -157,35 +176,61 @@ const Feed = () => {
   return (
     <>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-        <CButton color="dark" style={buttons} onClick={() => setIsOpen(true)}>New event</CButton>
+        <CButton color="dark" style={buttons} onClick={() => setIsOpen(true)}>
+          New event
+        </CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" className="modal-lg">
+      <CModal
+        visible={isOpen}
+        onClose={handleCancel}
+        backdrop="static"
+        className="modal-lg"
+      >
         <CModalHeader closeButton>
           <h5>New event</h5>
         </CModalHeader>
         <CModalBody>
           <form>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
-            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
-            <CFormLabel htmlFor="exampleFormControlTextarea1">Description</CFormLabel>
-            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
-            </form>
+            <CFormInput
+              placeholder=""
+              value={textField1}
+              id="exampleFormControlTextarea1"
+              maxLength="50"
+              onChange={(e) => setTextField1(e.target.value)}
+            ></CFormInput>
+            <CFormLabel htmlFor="exampleFormControlTextarea1">
+              Description
+            </CFormLabel>
+            <RichTextEditor
+              value={textField2}
+              onChange={(value) => setTextField2(value)}
+              token={accessToken}
+            />
+          </form>
         </CModalBody>
         <CModalFooter>
-          <CButton color="primary" onClick={handleSave}>Save</CButton>
-          <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
+          <CButton color="primary" onClick={handleSave}>
+            Save
+          </CButton>
+          <CButton color="secondary" onClick={handleCancel}>
+            Cancel
+          </CButton>
         </CModalFooter>
       </CModal>
       {/* Begin Edit */}
-      <CModal visible={editModalVisible} onClose={handleCancel} backdrop="static" className="modal-lg">
+      <CModal
+        visible={editModalVisible}
+        onClose={handleCancel}
+        backdrop="static"
+        className="modal-lg"
+      >
         <CModalHeader closeButton>
           <h5>Edit news item</h5>
         </CModalHeader>
         <CModalBody>
           <form>
-            <CFormLabel htmlFor="exampleFormControlTextarea1">
-              Title
-            </CFormLabel>
+            <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
             <CFormInput
               placeholder=""
               maxLength="50"
@@ -196,8 +241,11 @@ const Feed = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Description
             </CFormLabel>
-            <RichTextEditor value={textEditField2} onChange={(value) => setTextEditField2(value)}/>
-            
+            <RichTextEditor
+              value={textEditField2}
+              onChange={(value) => setTextEditField2(value)}
+              token={accessToken}
+            />
           </form>
         </CModalBody>
         <CModalFooter>
@@ -216,8 +264,15 @@ const Feed = () => {
           <ListItem key={index} item={item} />
         ))}
       </CListGroup>
+       {/* <DisplayImage id={"sample-clouds-400x300.jpg"} token={accessToken} />
+       
+<DisplayImage id={"file_example_PNG_500kB.png"} token={accessToken} />
+     <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUploadClick}>Upload</button>
+    </div> */}
     </>
-  )
+  );
 }
 const buttons = { margin: "10px" }
 

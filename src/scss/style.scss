@@ -19,6 +19,6 @@ $enable-rtl: true;
 @import "~trix/dist/trix.css";
 
 // TODO: Delete
-.trix-button--icon-attach, .trix-button--icon-quote {
+.trix-button--icon-quote {
     display: none;
 }
