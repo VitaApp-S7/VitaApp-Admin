@@ -55,10 +55,10 @@ const url = protectedResources.apiImage.endpoint
 //   return response.data
 // }
 
-// export async function getImageById(id, token) {
-//   var response = await axios.get(url + id, { headers: { Authorization: `Bearer ${token}` }})
-//   return response.data
-// }
+export async function getImageById(id, token) {
+  var response = await axios.get(url + id, { headers: { Authorization: `Bearer ${token}` }})
+  return response.data
+}
 
 export async function uploadImage(data, token) {
   try {
