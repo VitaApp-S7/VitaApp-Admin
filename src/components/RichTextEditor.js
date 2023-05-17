@@ -1,94 +1,67 @@
-import React, { Component } from "react";
-import "trix/dist/trix.css";
-import Trix from "trix";
-import axios from "axios";
-import { uploadImage, getImageById } from "src/services/imageService";
+import React from "react";
+import ReactQuill, { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import ImageUploader from "quill-image-uploader";
+import { uploadImage } from "src/services/imageService";
 
-class RichTextEditor extends Component {
+Quill.register("modules/imageUploader", ImageUploader);
+
+class NewRichTextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.trixInput = React.createRef();
+    this.quillRef = React.createRef();
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.trixInput.current.addEventListener("trix-change", (event) => {
-  //     console.log("trix-change");
-  //     this.props.onChange(event.target.innerHTML); //calling custom event
-  //   });
-
-  //   // Add event listener for image uploads
-  //   this.trixInput.current.addEventListener("trix-attachment-add", (event) => {
-  //     if (event.attachment.file) {
-  //       console.log("trix-attachment");
-  //       this.uploadFileAttachment(event.attachment);
-  //     }
-  //   });
-  // }
-
-  componentDidMount() {
-    this.trixInput.current.addEventListener("trix-change", event => {
-      this.props.onChange(event.target.innerHTML); //calling custom event
-    });
-
-    // Add event listener for trix-attachment-add
-    this.trixInput.current.addEventListener("trix-attachment-add", this.handleAttachmentAdd);
-  }
-
-  handleAttachmentAdd = (event) => {
-    const attachment = event.attachment;
-    if (attachment.file) {
-      this.uploadFileAttachment(attachment);
-    }
+  handleChange = (html) => {
+    this.props.onChange(html);
   };
 
-  async uploadFileAttachment(attachment) {
-    const file = attachment.file;
-    const formData = new FormData();
-
-    formData.append("Content-Type", file.type);
-    formData.append("image", file);
-
-
-    let responseData = await uploadImage(formData, this.props.token);
-    console.log(responseData);
-    // const url = responseData.url;
-    // const attributes = {
-    //   url: url,
-    //   href: url + "?content-disposition=attachment",
-    // };
-
-    const url = responseData.url;
-    console.log("url", url);
-    //const id = responseData.id;
-    //let url = "http:localhost:5010/image/" + id;
-    attachment.setAttributes({
-      url: url,
-      href: `\${url}?content-disposition=attachment`,
-      src: url, // Set the correct src attribute
-    });
-
-    // Force Trix to re-render the attachment with the updated attributes
-    const editor = this.trixInput.current.editor;
-    editor.updateContents((delta) => delta.retain(editor.getDocument().length));
-
-    // Replace the image src in the editor
-    const imgElement = editor.element.querySelector(`img[data-trix-store-key^="imageElement/\${attachment.attachmentId}"]`);
-    if (imgElement) {
-      imgElement.setAttribute("src", url);
-      imgElement.setAttribute("data-trix-store-key", `imageElement/\${attachment.attachmentId}/\${url}`);
-    }
-
-  }
-
+  modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"],
+      [{ header: 1 }, { header: 2 }, { header: [3, 4, 5, 6] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ align: [] }],
+      [{ color: [] }, { background: [] }],
+      [{ font: [] }, { size: ["small", false, "large", "huge"] }],
+      ["link", "image"],
+      [{ script: "sub" }, { script: "super" }],
+      ["blockquote", "code-block"],
+      [{ direction: "rtl" }],
+      ["clean"],
+    ],
+    imageUploader: {
+      upload: (file) => {
+        return new Promise(async (resolve, reject) => {
+          const formData = new FormData();
+          formData.append("image", file);
+          
+          try {
+            const result = await uploadImage(formData, this.props.token);
+            console.log("result", result);
+            resolve(result.url);
+          } catch (error) {
+            reject("Upload failed");
+            console.error("Error:", error);
+          }
+        });
+      },
+    },
+  };
 
   render() {
     return (
       <div>
-        <input type="hidden" id="trix" value={this.props.value} />
-        <trix-editor input="trix" ref={this.trixInput} />
+        <ReactQuill
+          onChange={this.handleChange}
+          modules={this.modules}
+          value={this.props.value}
+        />
       </div>
     );
   }
 }
 
-export default React.memo(RichTextEditor);
+export default NewRichTextEditor;
