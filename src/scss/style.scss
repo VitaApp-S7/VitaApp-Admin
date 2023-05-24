@@ -15,10 +15,3 @@ $enable-rtl: true;
 
 // If you want to add custom CSS you can put it here.
 @import "custom";
-
-@import "~trix/dist/trix.css";
-
-// TODO: Delete
-.trix-button--icon-quote {
-    display: none;
-}
