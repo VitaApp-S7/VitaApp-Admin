@@ -1,23 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  getEvents,
-  updateEvent,
-  deleteEventById,
-  createEvent,
-} from "../../services/eventService";
-import {
-  CButton,
-  CListGroup,
-  CModalTitle,
-  CListGroupItem,
-  CModal,
-  CModalHeader,
-  CModalBody,
-  CModalFooter,
-  CFormTextarea,
-  CFormInput,
-  CFormLabel,
-} from "@coreui/react";
+import { getEvents, updateEvent, deleteEventById, createEvent } from "../../services/eventService";
+import {CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormInput, CFormLabel} from "@coreui/react";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
 import RichTextEditor from "../../components/RichTextEditor";
@@ -37,8 +20,6 @@ const Feed = () => {
   const [textEditField2, setTextEditField2] = useState("");
   const [textEditId, setTextEditId] = useState("");
   const [editData, setEditData] = useState("");
-
-  const [file, setFile] = useState(null);
 
   let newArray = new Array();
   const ListItem = (item) => {
