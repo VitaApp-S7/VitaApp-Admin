@@ -22,8 +22,6 @@ import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
 import RichTextEditor from "../../components/RichTextEditor";
 import RichTextListItem from "../../components/RichTextListItem";
-import DisplayImage from "../../components/DisplayImage";
-import { uploadImage } from "src/services/imageService";
 
 const Feed = () => {
   const { instance, accounts } = useMsal();
@@ -41,21 +39,6 @@ const Feed = () => {
   const [editData, setEditData] = useState("");
 
   const [file, setFile] = useState(null);
-
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
-
-  const handleUploadClick = async () => {
-    if (!file) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    await uploadImage(formData, accessToken);
-  };
 
   let newArray = new Array();
   const ListItem = (item) => {
@@ -309,13 +292,6 @@ const Feed = () => {
           <ListItem key={index} item={item} />
         ))}
       </CListGroup>
-      {/* <DisplayImage id={"sample-clouds-400x300.jpg"} token={accessToken} />
-       
-<DisplayImage id={"file_example_PNG_500kB.png"} token={accessToken} />
-     <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUploadClick}>Upload</button>
-    </div> */}
     </>
   );
 };

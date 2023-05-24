@@ -41,7 +41,7 @@ class NewRichTextEditor extends React.Component {
           try {
             const result = await uploadImage(formData, this.props.token);
             console.log("result", result);
-            resolve(result.url);
+            resolve(result);
           } catch (error) {
             reject("Upload failed");
             console.error("Error:", error);
