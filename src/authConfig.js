@@ -104,5 +104,9 @@ export const protectedResources = {
   apiEvent: {
     endpoint: `${baseUrl}/event/`,
     scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
+  },
+  apiImage: {
+    endpoint: `${baseUrl}/image/`,
+    scopes: [ "api://215b09e4-54cb-49aa-837b-546f73fc29f6/User.All" ]
   }
 }

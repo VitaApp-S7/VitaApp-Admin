@@ -227,7 +227,7 @@ const Moodboosters = () => {
           New moodbooster
         </CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" style={{ minWidth: "700px" }}>
+      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" className="modal-xl">
         <CModalHeader closeButton>
           <h5>New moodbooster</h5>
         </CModalHeader>
@@ -286,7 +286,7 @@ const Moodboosters = () => {
         </CModalFooter>
       </CModal>
       {/* Begin Edit */}
-      <CModal visible={editModalVisible} onClose={handleCancel} backdrop="static">
+      <CModal visible={editModalVisible} onClose={handleCancel} backdrop="static" className="modal-xl">
         <CModalHeader closeButton>
           <h5>Edit moodbooster</h5>
         </CModalHeader>
