@@ -3,9 +3,15 @@ import {
     createActivity,
     deleteActivityById,
     getAllActivities,
-    updateActivity,
-    getAllCategories
 } from "../../services/moodboosterService"
+import {
+    getAllChallenges,
+    createChallenge
+} from "../../services/challengeService"
+import {
+    getChallengeTeams,
+    createTeam
+} from "../../services/challengeTeamService"
 import { DatePicker, Modal, Select } from 'antd';
 import locale from 'antd/es/date-picker/locale/nl_NL'
 const { RangePicker } = DatePicker;
@@ -94,7 +100,7 @@ const Challenges = () => {
     const deleteMoodbooster = async (item) => {
         await deleteActivityById(item.id, accessToken)
         setDeleteModalVisible(false)
-        handleActivities()
+        handleChallenges()
     }
     const DeleteModal = () => {
         const item = deleteData.item
@@ -123,18 +129,40 @@ const Challenges = () => {
 
     const handleSave = async () => {
 
+        console.log(textField4);
         const postData = {
             title: textField1,
             description: textField2,
-            //category: catagories.find(x => x.id == textField3),
-            points: textField4
+            moodboosterIds: textField3,
+            startDate: textField4[0],
+            endDate: textField4[1]
         }
+
+
+        console.log(postData);
         try {
-            await createActivity(postData, accessToken)
+            var returnData = await createChallenge(postData, accessToken)
+            createTeam({
+                name: textTeam1Field1,
+                challengeId: returnData.id,
+                reward: textTeam1Field2
+            }, accessToken)
+            createTeam({
+                name: textTeam2Field1,
+                challengeId: returnData.id,
+                reward: textTeam2Field2
+            }, accessToken)
+            if (textTeam3Field2 || textTeam3Field1) {
+                createTeam({
+                    name: textTeam3Field1,
+                    challengeId: returnData.id,
+                    reward: textTeam3Field2
+                }, accessToken)
+            }
             setIsOpen(false)
             handleCancel()
             await handleMoodboosters()
-            await handleActivities()
+            await handleChallenges()
         } catch (error) {
             console.error("Error:", error)
         }
@@ -167,7 +195,8 @@ const Challenges = () => {
             })
             .then(() => {
                 if (accessToken) {
-                    handleActivities()
+                    console.log("YAY")
+                    handleChallenges()
                     handleMoodboosters()
                 }
                 // eslint-disable-next-line no-unused-vars
@@ -180,22 +209,22 @@ const Challenges = () => {
                     })
                     .then(() => {
                         if (accessToken) {
-                            handleActivities()
+                            handleChallenges()
                         }
                     })
             })
     }
 
-    const handleActivities = async () => {
-        var challenges = await getAllChallenges(accessToken)
-        setData(await challenges)
-        console.log(challenges)
+    const handleChallenges = async () => {
+        var challengesList = await getAllChallenges(accessToken)
+        console.log(challengesList)
+        setData(challengesList)
+        console.log(challengesList)
     }
 
     const handleMoodboosters = async () => {
-        var moodbooster = await getAllActivities(accessToken)
-        setMoodboosters(await moodbooster)
-        console.log(moodbooster)
+        var moodboosters = await getAllActivities(accessToken)
+        setMoodboosters(moodboosters)
     }
     return (
         <>
@@ -230,7 +259,7 @@ const Challenges = () => {
                     style={{ width: '100%' }}
                     placeholder="Please select"
                     onChange={(value) => setTextField3(value.split(','))}
-                    options={data.map(({ item }) => ({ value: item.id, label: item.title }))}
+                    options={moodboosters.map((item) => ({ value: item.id, label: item.title }))}
                 />
                 <CFormLabel htmlFor="exampleFormControlTextarea1">
                     Duration
