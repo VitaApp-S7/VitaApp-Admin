@@ -154,7 +154,7 @@ const Feed = () => {
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
         <CButton color="dark" style={buttons} onClick={() => setIsOpen(true)}>New item</CButton>
       </div>
-      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" className="modal-lg">
+      <CModal visible={isOpen} onClose={handleCancel} backdrop="static" className="modal-xl">
         <CModalHeader closeButton>
           <h5>New Item</h5>
         </CModalHeader>
@@ -172,7 +172,7 @@ const Feed = () => {
         </CModalFooter>
       </CModal>
       {/* Begin Edit */}
-      <CModal visible={editModalVisible} onClose={handleCancel} backdrop="static" className="modal-lg">
+      <CModal visible={editModalVisible} onClose={handleCancel} backdrop="static" className="modal-xl">
         <CModalHeader closeButton>
           <h5>Edit news item</h5>
         </CModalHeader>

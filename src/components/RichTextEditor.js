@@ -1,26 +1,67 @@
-import React, { Component } from "react";
-import Trix from "trix";
+import React from "react";
+import ReactQuill, { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import ImageUploader from "quill-image-uploader";
+import { uploadImage } from "src/services/imageService";
 
-class RichTextEditor extends Component {
-    constructor(props) {
-        super(props);
-        this.trixInput = React.createRef();
-    }
+Quill.register("modules/imageUploader", ImageUploader);
 
-    componentDidMount() {
-        this.trixInput.current.addEventListener("trix-change", event => {
-            this.props.onChange(event.target.innerHTML); //calling custom event
+class NewRichTextEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.quillRef = React.createRef();
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange = (html) => {
+    this.props.onChange(html);
+  };
+
+  modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"],
+      [{ header: 1 }, { header: 2 }, { header: [3, 4, 5, 6] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ align: [] }],
+      [{ color: [] }, { background: [] }],
+      [{ font: [] }, { size: ["small", false, "large", "huge"] }],
+      ["link", "image"],
+      [{ script: "sub" }, { script: "super" }],
+      ["blockquote", "code-block"],
+      [{ direction: "rtl" }],
+      ["clean"],
+    ],
+    imageUploader: {
+      upload: (file) => {
+        return new Promise(async (resolve, reject) => {
+          const formData = new FormData();
+          formData.append("image", file);
+          
+          try {
+            const result = await uploadImage(formData, this.props.token);
+            console.log("result", result);
+            resolve(result);
+          } catch (error) {
+            reject("Upload failed");
+            console.error("Error:", error);
+          }
         });
-    }
+      },
+    },
+  };
 
-    render() {
-        return (
-            <div>
-                <input type="hidden" id="trix" value={this.props.value} />
-                <trix-editor input="trix" ref={this.trixInput} />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <ReactQuill
+          onChange={this.handleChange}
+          modules={this.modules}
+          value={this.props.value}
+        />
+      </div>
+    );
+  }
 }
 
-export default React.memo(RichTextEditor);
+export default NewRichTextEditor;
