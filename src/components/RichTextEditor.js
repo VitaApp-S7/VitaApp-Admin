@@ -3,6 +3,7 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageUploader from "quill-image-uploader";
 import { uploadImage } from "src/services/imageService";
+import 'quill-image-uploader/dist/quill.imageUploader.min.css';
 
 Quill.register("modules/imageUploader", ImageUploader);
 
