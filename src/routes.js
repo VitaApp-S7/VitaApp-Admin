@@ -5,6 +5,7 @@ const Events = React.lazy(() => import("./views/events/events"))
 const News = React.lazy(() => import("./views/feed/feed"))
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"))
 const Typography = React.lazy(() => import("./views/theme/typography/Typography"))
+const Challenges = React.lazy(() => import("./views/challenges/challenges"))
 
 // Base
 const Accordion = React.lazy(() => import("./views/base/accordion/Accordion"))
@@ -288,6 +289,11 @@ const routes = [
     path: "/widgets",
     name: "Widgets",
     element: Widgets 
+  },
+  {
+    path: "/challenges",
+    name: "Challenges",
+    element: Challenges 
   }
 ]
 
