@@ -6,11 +6,13 @@ import {
 } from "../../services/moodboosterService"
 import {
     getAllChallenges,
-    createChallenge
+    createChallenge,
+    deleteChallenge
 } from "../../services/challengeService"
 import {
     getChallengeTeams,
-    createTeam
+    createTeam,
+    deleteChallengeTeam,
 } from "../../services/challengeTeamService"
 import { DatePicker, Modal, Select } from 'antd';
 import locale from 'antd/es/date-picker/locale/nl_NL'
@@ -117,6 +119,7 @@ const Challenges = () => {
     }
     const deleteMoodbooster = async (item) => {
         await deleteActivityById(item.id, accessToken)
+        
         const imageUrls = getBlobImageUrls(item.description)
         await Promise.all(
             imageUrls.map(async (imageUrl) => {
@@ -128,6 +131,8 @@ const Challenges = () => {
                 }
             })
         );
+        await deleteChallenge(item.id, accessToken)
+        await deleteChallengeTeam(item.id, accessToken)
         setDeleteModalVisible(false)
         handleChallenges()
     }
@@ -303,7 +308,7 @@ const Challenges = () => {
                     allowClear
                     style={{ width: '100%' }}
                     placeholder="Please select"
-                    onChange={(value) => setTextField3(value.split(','))}
+                    onChange={(value) => setTextField3(value)}
                     options={moodboosters.map((item) => ({ value: item.id, label: item.title }))}
                 />
                 <CFormLabel htmlFor="exampleFormControlTextarea1">
