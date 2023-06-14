@@ -205,6 +205,7 @@ const Feed = () => {
               placeholder=""
               value={textField1}
               id="exampleFormControlTextarea1"
+              required
               maxLength="50"
               onChange={(e) => setTextField1(e.target.value)}
             ></CFormInput>
@@ -243,6 +244,7 @@ const Feed = () => {
             <CFormInput
               placeholder=""
               maxLength="50"
+              required
               value={textEditField1}
               id="exampleFormControlTextarea1"
               onChange={(e) => setTextEditField1(e.target.value)}
