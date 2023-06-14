@@ -6,11 +6,13 @@ import {
 } from "../../services/moodboosterService"
 import {
     getAllChallenges,
-    createChallenge
+    createChallenge,
+    deleteChallenge
 } from "../../services/challengeService"
 import {
     getChallengeTeams,
-    createTeam
+    createTeam,
+    deleteChallengeTeam,
 } from "../../services/challengeTeamService"
 import { DatePicker, Modal, Select } from 'antd';
 import locale from 'antd/es/date-picker/locale/nl_NL'
@@ -98,7 +100,8 @@ const Challenges = () => {
         setDeleteModalVisible(true)
     }
     const deleteMoodbooster = async (item) => {
-        await deleteActivityById(item.id, accessToken)
+        await deleteChallenge(item.id, accessToken)
+        await deleteChallengeTeam(item.id, accessToken)
         setDeleteModalVisible(false)
         handleChallenges()
     }

@@ -33,5 +33,10 @@ export async function updateTeam(data, token) {
   return response.data
 }
 
+export async function deleteChallengeTeam(id, token) {
+  console.log("delete teams")
+  var response = await axios.delete(`${url}team/challenge/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+  return response
+}
 //delete team
 //team/id
