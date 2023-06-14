@@ -34,6 +34,7 @@ import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
 import RichTextEditor from "../../components/RichTextEditor"
 import RichTextListItem from "../../components/RichTextListItem"
+import { deleteImageById } from "../../services/imageService";
 
 const Challenges = () => {
     const { instance, accounts } = useMsal()
@@ -54,6 +55,11 @@ const Challenges = () => {
     const [textTeam3Field1, setTextTeam3Field1] = useState("")
     const [textTeam3Field2, setTextTeam3Field2] = useState("")
     const [deleteModalVisible, setDeleteModalVisible] = useState(false)
+    const [addresses, setAddresses] = useState([]);
+
+  const handleAddressesChange = (addresses) => {
+    setAddresses(addresses);
+  };
 
     const ListItem = (item) => {
 
@@ -84,6 +90,17 @@ const Challenges = () => {
             </CListGroupItem>
         )
     }
+    
+    const getBlobImageUrls = (itemDescription) => {
+        const regex = /<img.*?src="(https:\/\/csb100320022a0453ef.blob.core.windows.net\/vitafilestorage\/[a-zA-Z0-9-]+)"/g;
+        const imageUrls = [];
+        let match;
+        while ((match = regex.exec(itemDescription))) {
+          imageUrls.push(match[1]);
+        }
+        return imageUrls;
+      }
+
     // eslint-disable-next-line no-unused-vars
     const onEdit = (item) => {
         setEditData(item)
@@ -93,6 +110,7 @@ const Challenges = () => {
         setTextEditField3(item.item.category.id)
         setTextEditField4(item.item.points)
         setTextEditId(item.item.id)
+        setAddresses(getBlobImageUrls(item.item.description))
         setEditModalVisible(true)
     }
     const onDelete = (item) => {
@@ -100,6 +118,19 @@ const Challenges = () => {
         setDeleteModalVisible(true)
     }
     const deleteMoodbooster = async (item) => {
+        await deleteActivityById(item.id, accessToken)
+        
+        const imageUrls = getBlobImageUrls(item.description)
+        await Promise.all(
+            imageUrls.map(async (imageUrl) => {
+                try {
+                    await deleteImageById(imageUrl, accessToken)
+
+                } catch (error) {
+                    console.error("Error deleting image:", error);
+                }
+            })
+        );
         await deleteChallenge(item.id, accessToken)
         await deleteChallengeTeam(item.id, accessToken)
         setDeleteModalVisible(false)
@@ -132,7 +163,8 @@ const Challenges = () => {
 
     const handleSave = async () => {
 
-        console.log(textField4);
+        const imageUrls = getBlobImageUrls(textField2)
+
         const postData = {
             title: textField1,
             description: textField2,
@@ -141,8 +173,6 @@ const Challenges = () => {
             endDate: textField4[1]
         }
 
-
-        console.log(postData);
         try {
             var returnData = await createChallenge(postData, accessToken)
             createTeam({
@@ -162,6 +192,21 @@ const Challenges = () => {
                     reward: textTeam3Field2
                 }, accessToken)
             }
+            // Delete unused images
+            // TODO: make one function and use that instead of having the function declared again
+            await Promise.all(
+                addresses.map(async (imageUrl) => {
+                if (!imageUrls.includes(imageUrl)) {
+                    try {
+                    await deleteImageById(imageUrl, accessToken)
+
+                    } catch (error) {
+                    console.error("Error deleting image:", error);
+                    }
+                }
+                })
+            );
+
             setIsOpen(false)
             handleCancel()
             await handleMoodboosters()
@@ -171,11 +216,14 @@ const Challenges = () => {
         }
     }
 
+    // TODO: add update function and add the image delete logic to it like in the other views
+
     const handleCancel = () => {
         setTextField1("")
         setTextField2("")
         setTextField3("")
         setTextField4("")
+        setAddresses([]);
         setIsOpen(false)
         setDeleteModalVisible(false)
     }
@@ -198,7 +246,6 @@ const Challenges = () => {
             })
             .then(() => {
                 if (accessToken) {
-                    console.log("YAY")
                     handleChallenges()
                     handleMoodboosters()
                 }

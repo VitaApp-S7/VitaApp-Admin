@@ -2,7 +2,7 @@ import React from "react";
 
 function RichTextListItem(props) {
     return (
-      <div className="trix-content" dangerouslySetInnerHTML={props.item} />
+      <div dangerouslySetInnerHTML={props.item} />
     );
   }
   

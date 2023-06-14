@@ -5,21 +5,27 @@ import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
 import RichTextEditor from "../../components/RichTextEditor"
 import RichTextListItem from "../../components/RichTextListItem"
+import { deleteImageById } from "../../services/imageService";
 
 const Feed = () => {
   const { instance, accounts } = useMsal()
-  const [ accessToken, setAccessToken ] = useState(null)
-  const [ data, setData ] = useState([])
-  const [ deleteData, setDeleteData ] = useState("")
-  const [ isOpen, setIsOpen ] = useState(false)
-  const [ editData, setEditData ] = useState("")
-  const [ textField1, setTextField1 ] = useState("")
-  const [ textField2, setTextField2 ] = useState("")
-  const [ textEditField1, setTextEditField1 ] = useState("")
-  const [ textEditField2, setTextEditField2 ] = useState("")
-  const [ textEditId, setTextEditId ] = useState("")
-  const [ deleteModalVisible, setDeleteModalVisible ] = useState(false)
-  const [ editModalVisible, setEditModalVisible ] = useState(false)
+  const [accessToken, setAccessToken] = useState(null)
+  const [data, setData] = useState([])
+  const [deleteData, setDeleteData] = useState("")
+  const [isOpen, setIsOpen] = useState(false)
+  const [editData, setEditData] = useState("")
+  const [textField1, setTextField1] = useState("")
+  const [textField2, setTextField2] = useState("")
+  const [textEditField1, setTextEditField1] = useState("")
+  const [textEditField2, setTextEditField2] = useState("")
+  const [textEditId, setTextEditId] = useState("")
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false)
+  const [editModalVisible, setEditModalVisible] = useState(false)
+  const [addresses, setAddresses] = useState([]);
+
+  const handleAddressesChange = (addresses) => {
+    setAddresses(addresses);
+  };
 
   const ListItem = (item) => {
     return (
@@ -34,6 +40,17 @@ const Feed = () => {
       </CListGroupItem>
     )
   }
+
+  const getBlobImageUrls = (itemDescription) => {
+    const regex = /<img.*?src="(https:\/\/csb100320022a0453ef.blob.core.windows.net\/vitafilestorage\/[a-zA-Z0-9-]+)"/g;
+    const imageUrls = [];
+    let match;
+    while ((match = regex.exec(itemDescription))) {
+      imageUrls.push(match[1]);
+    }
+    return imageUrls;
+  }
+
   // eslint-disable-next-line no-unused-vars
   const onEdit = (item) => {
     setEditData(item)
@@ -41,6 +58,7 @@ const Feed = () => {
     setTextEditField1(item.item.title)
     setTextEditField2(item.item.description)
     setTextEditId(item.item.id)
+    setAddresses(getBlobImageUrls(item.item.description))
     setEditModalVisible(true)
   }
   const onDelete = (item) => {
@@ -49,6 +67,19 @@ const Feed = () => {
   }
   const deleteItem = async (item) => {
     await deleteNewsById(item.id, accessToken)
+
+    const imageUrls = getBlobImageUrls(item.description)
+    await Promise.all(
+      imageUrls.map(async (imageUrl) => {
+        try {
+          await deleteImageById(imageUrl, accessToken)
+
+        } catch (error) {
+          console.error("Error deleting image:", error);
+        }
+      })
+    );
+
     setDeleteModalVisible(false)
     handleActivities()
   }
@@ -71,15 +102,34 @@ const Feed = () => {
   }
 
   const handleSave = async () => {
+    const imageUrls = getBlobImageUrls(textField2)
+
     const postData = {
       title: textField1,
       description: textField2,
     }
     try {
       await createNews(postData, accessToken)
+
+      // Delete unused images
+      // TODO: make one function and use that instead of having the function declared again
+      await Promise.all(
+        addresses.map(async (imageUrl) => {
+          if (!imageUrls.includes(imageUrl)) {
+            try {
+              await deleteImageById(imageUrl, accessToken)
+
+            } catch (error) {
+              console.error("Error deleting image:", error);
+            }
+          }
+        })
+      );
+
       setIsOpen(false)
       setTextField1("")
       setTextField2("")
+      setAddresses([]);
       handleActivities()
     } catch (error) {
       console.error("Error:", error)
@@ -88,23 +138,39 @@ const Feed = () => {
   const handleCancel = () => {
     setTextField1("")
     setTextField2("")
+    setAddresses([]);
     setIsOpen(false)
     setDeleteModalVisible(false)
     setEditModalVisible(false)
   }
 
   const handleUpdate = async () => {
+    const imageUrls = getBlobImageUrls(textEditField2)
 
     const UpdateNews = {
-      
+
       id: textEditId,
       title: textEditField1,
       description: textEditField2
     }
-
-    console.log(UpdateNews)
     try {
       await updateNews(UpdateNews, accessToken)
+
+      // Delete unused images
+      // TODO: make one function and use that instead of having the function declared again
+      await Promise.all(
+        addresses.map(async (imageUrl) => {
+          if (!imageUrls.includes(imageUrl)) {
+            try {
+              await deleteImageById(imageUrl, accessToken)
+
+            } catch (error) {
+              console.error("Error deleting image:", error);
+            }
+          }
+        })
+      );
+
       setIsOpen(false)
       handleCancel()
       await handleActivities()
@@ -115,7 +181,7 @@ const Feed = () => {
 
   useEffect(() => {
     requestAccestoken()
-  }, [ accessToken ])
+  }, [accessToken])
 
   const requestAccestoken = async () => {
     const request = {
@@ -130,7 +196,7 @@ const Feed = () => {
       if (accessToken) {
         handleActivities()
       }
-    // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars
     }).catch((e) => {
       instance.acquireTokenPopup(request).then((response) => {
         setAccessToken(response.accessToken)
@@ -142,11 +208,10 @@ const Feed = () => {
     })
 
   }
-  
+
   const handleActivities = async () => {
     var news = await getNews(accessToken)
     setData(await news.data)
-    console.log(news.data)
   }
 
   return (
@@ -161,9 +226,9 @@ const Feed = () => {
         <CModalBody>
           <form>
             <CFormLabel htmlFor="exampleFormControlTextarea1">Title</CFormLabel>
-            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextField1(e.target.value)} ></CFormInput>
+            <CFormInput placeholder="" value={textField1} id="exampleFormControlTextarea1" maxLength="50" onChange={(e) => setTextField1(e.target.value)} addresses={addresses} onAddressesChange={handleAddressesChange}></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea2">Description</CFormLabel>
-            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)}/>
+            <RichTextEditor value={textField2} onChange={(value) => setTextField2(value)} />
           </form>
         </CModalBody>
         <CModalFooter>
@@ -187,11 +252,13 @@ const Feed = () => {
               value={textEditField1}
               id="exampleFormControlTextarea1"
               onChange={(e) => setTextEditField1(e.target.value)}
+              addresses={addresses}
+              onAddressesChange={handleAddressesChange}
             ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Description
             </CFormLabel>
-            <RichTextEditor value={textEditField2} onChange={(value) => setTextEditField2(value)}/>
+            <RichTextEditor value={textEditField2} onChange={(value) => setTextEditField2(value)} />
           </form>
         </CModalBody>
         <CModalFooter>

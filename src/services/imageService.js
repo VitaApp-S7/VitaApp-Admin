@@ -15,3 +15,9 @@ export async function uploadImage(data, token) {
     throw error; // Rethrow the error to be caught by the caller if needed
   }
 }
+
+export async function deleteImageById(imageUrl, token) {
+  const id = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
+  var response = await axios.delete(url + id, { headers: { Authorization: `Bearer ${token}` }})
+  return response.data
+}

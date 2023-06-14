@@ -23,6 +23,7 @@ import { useMsal } from "@azure/msal-react"
 import { loginRequest } from "../../authConfig"
 import RichTextEditor from "../../components/RichTextEditor"
 import RichTextListItem from "../../components/RichTextListItem"
+import { deleteImageById } from "../../services/imageService";
 
 const Moodboosters = () => {
   const { instance, accounts } = useMsal()
@@ -43,6 +44,11 @@ const Moodboosters = () => {
   const [ textEditId, setTextEditId ] = useState("")
   const [ deleteModalVisible, setDeleteModalVisible ] = useState(false)
   const [ editModalVisible, setEditModalVisible ] = useState(false)
+  const [addresses, setAddresses] = useState([]);
+
+  const handleAddressesChange = (addresses) => {
+    setAddresses(addresses);
+  };
 
   const ListItem = (item) => {
 
@@ -73,6 +79,17 @@ const Moodboosters = () => {
       </CListGroupItem>
     )
   }
+
+  const getBlobImageUrls = (itemDescription) => {
+    const regex = /<img.*?src="(https:\/\/csb100320022a0453ef.blob.core.windows.net\/vitafilestorage\/[a-zA-Z0-9-]+)"/g;
+    const imageUrls = [];
+    let match;
+    while ((match = regex.exec(itemDescription))) {
+      imageUrls.push(match[1]);
+    }
+    return imageUrls;
+  }
+
   // eslint-disable-next-line no-unused-vars
   const onEdit = (item) => {
     setEditData(item)
@@ -82,6 +99,7 @@ const Moodboosters = () => {
     setTextEditField3(item.item.category.id)
     setTextEditField4(item.item.points)
     setTextEditId(item.item.id)
+    setAddresses(getBlobImageUrls(item.item.description))
     setEditModalVisible(true)
   }
   const onDelete = (item) => {
@@ -90,6 +108,20 @@ const Moodboosters = () => {
   }
   const deleteMoodbooster = async (item) => {
     await deleteActivityById(item.id, accessToken)
+
+    const imageUrls = getBlobImageUrls(item.description)
+    // TODO: make one function and use that instead of having the function declared again
+    await Promise.all(
+      imageUrls.map(async (imageUrl) => {
+          try {
+            await deleteImageById(imageUrl, accessToken)
+
+          } catch (error) {
+            console.error("Error deleting image:", error);
+          }
+      })
+    );
+
     setDeleteModalVisible(false)
     handleActivities()
   }
@@ -119,6 +151,7 @@ const Moodboosters = () => {
   }
 
   const handleSave = async () => {
+    const imageUrls = getBlobImageUrls(textField2)
     const postData = {
       title: textField1,
       description: textField2,
@@ -127,6 +160,22 @@ const Moodboosters = () => {
     }
     try {
       await createActivity(postData, accessToken)
+
+      // Delete unused images
+      // TODO: make one function and use that instead of having the function declared again
+      await Promise.all(
+        addresses.map(async (imageUrl) => {
+          if (!imageUrls.includes(imageUrl)) {
+            try {
+              await deleteImageById(imageUrl, accessToken)
+
+            } catch (error) {
+              console.error("Error deleting image:", error);
+            }
+          }
+        })
+      );
+
       setIsOpen(false)
       handleCancel()
       await handleCatagory()
@@ -136,7 +185,7 @@ const Moodboosters = () => {
     }
   }
   const handleUpdate = async () => {
-
+    const imageUrls = getBlobImageUrls(textEditField2)
     const postData = {
       id: textEditId,
       title: textEditField1,
@@ -146,9 +195,23 @@ const Moodboosters = () => {
       status: "ACTIVE"
     }
 
-    console.log(postData)
     try {
       await updateActivity(postData, accessToken)
+      // Delete unused images
+      // TODO: make one function and use that instead of having the function declared again
+      await Promise.all(
+        addresses.map(async (imageUrl) => {
+          if (!imageUrls.includes(imageUrl)) {
+            try {
+              await deleteImageById(imageUrl, accessToken)
+
+            } catch (error) {
+              console.error("Error deleting image:", error);
+            }
+          }
+        })
+      );
+
       setIsOpen(false)
       handleCancel()
       await handleActivities()
@@ -167,6 +230,7 @@ const Moodboosters = () => {
     setTextEditField2("")
     setTextEditField3("")
     setTextEditField4("")
+    setAddresses([]);
     setIsOpen(false)
     setDeleteModalVisible(false)
     setEditModalVisible(false)
@@ -212,13 +276,11 @@ const Moodboosters = () => {
   const handleActivities = async () => {
     var activities = await getAllActivities(accessToken)
     setData(await activities)
-    console.log(activities)
   }
 
   const handleCatagory = async () => {
     var catagories = await getAllCategories(accessToken)
     setCatagories(await catagories)
-    console.log(catagories)
   }
   return (
     <>
@@ -240,6 +302,8 @@ const Moodboosters = () => {
               id="exampleFormControlTextarea1"
               maxLength="50"
               onChange={(e) => setTextField1(e.target.value)}
+              addresses={addresses}
+              onAddressesChange={handleAddressesChange}
             ></CFormInput>
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Description
@@ -248,12 +312,6 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Category
             </CFormLabel>
-            {/* <CFormInput
-              placeholder=""
-              value={textField3}
-              id="exampleFormControlTextarea1"
-              onChange={(e) => setTextField3(e.target.value)}
-            ></CFormInput> */}
             <CFormSelect aria-label="Default select example"
               key="exampleFormControlTextarea1"
               value={textField3}
@@ -273,6 +331,8 @@ const Moodboosters = () => {
               min="1"
               max="5"
               onChange={(e) => setTextField4(e.target.value)}
+              addresses={addresses}
+              onAddressesChange={handleAddressesChange}
             />
           </form>
         </CModalBody>
@@ -309,12 +369,6 @@ const Moodboosters = () => {
             <CFormLabel htmlFor="exampleFormControlTextarea1">
               Category
             </CFormLabel>
-            {/* <CFormInput
-              placeholder=""
-              value={textEditField3}
-              id="exampleFormControlTextarea1"
-              onChange={(e) => setTextEditField3(e.target.value)}
-            ></CFormInput> */}
             <CFormSelect aria-label="Default select example"
               key="exampleFormControlTextarea1"
               value={textEditField3}
