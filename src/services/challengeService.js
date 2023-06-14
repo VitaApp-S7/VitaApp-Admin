@@ -36,5 +36,9 @@ export async function updateChallenge(event, token) {
     return response.data
 }
 
+export async function deleteChallenge(id, token) {
+    var response = await axios.delete(`${url}challenge/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+    return response
+}
 //delete
 //challenge/{id}
