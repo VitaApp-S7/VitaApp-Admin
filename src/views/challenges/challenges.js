@@ -261,7 +261,7 @@ const Challenges = () => {
                     allowClear
                     style={{ width: '100%' }}
                     placeholder="Please select"
-                    onChange={(value) => setTextField3(value.split(','))}
+                    onChange={(value) => setTextField3(value)}
                     options={moodboosters.map((item) => ({ value: item.id, label: item.title }))}
                 />
                 <CFormLabel htmlFor="exampleFormControlTextarea1">
