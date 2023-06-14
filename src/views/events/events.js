@@ -1,6 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { getEvents, updateEvent, deleteEventById, createEvent } from "../../services/eventService";
-import {CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormInput, CFormLabel} from "@coreui/react";
+import {
+  getEvents,
+  updateEvent,
+  deleteEventById,
+  createEvent,
+} from "../../services/eventService";
+import {
+  CButton,
+  CListGroup,
+  CModalTitle,
+  CListGroupItem,
+  CModal,
+  CModalHeader,
+  CModalBody,
+  CModalFooter,
+  CFormInput,
+  CFormLabel,
+  CFormFeedback,
+} from "@coreui/react";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
 import RichTextEditor from "../../components/RichTextEditor";
@@ -20,6 +37,8 @@ const Feed = () => {
   const [textEditField2, setTextEditField2] = useState("");
   const [textEditId, setTextEditId] = useState("");
   const [editData, setEditData] = useState("");
+  const [field1Error, setField1Error] = useState(false);
+  const [field2Error, setField2Error] = useState(false);
 
   let newArray = new Array();
   const ListItem = (item) => {
@@ -101,6 +120,15 @@ const Feed = () => {
   };
 
   const handleSave = async () => {
+    if (!textField1) {
+      setField1Error(true);
+      return;
+    }
+    if (!textField2) {
+      setField2Error(true);
+      return;
+    }
+
     const postData = {
       title: textField1,
       description: textField2,
@@ -122,9 +150,20 @@ const Feed = () => {
     setIsOpen(false);
     setDeleteModalVisible(false);
     setEditModalVisible(false);
+    setField1Error(false);
+    setField2Error(false);
   };
 
   const handleUpdate = async () => {
+    if (!textEditField1) {
+      setField1Error(true);
+      return;
+    }
+    if (!textEditField2) {
+      setField2Error(true);
+      return;
+    }
+
     const UpdateEvent = {
       id: textEditId,
       title: textEditField1,
@@ -143,10 +182,10 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    requestAccestoken();
+    requestAccessToken();
   }, [accessToken]);
 
-  const requestAccestoken = async () => {
+  const requestAccessToken = async () => {
     const request = {
       ...loginRequest,
       account: accounts[0],
@@ -208,15 +247,23 @@ const Feed = () => {
               required
               maxLength="50"
               onChange={(e) => setTextField1(e.target.value)}
+              isInvalid={field1Error}
             ></CFormInput>
-            <CFormLabel htmlFor="exampleFormControlTextarea1">
+            {field1Error && (
+              <CFormFeedback>Field is required</CFormFeedback>
+            )}
+            <CFormLabel htmlFor="exampleFormControlTextarea2">
               Description
             </CFormLabel>
             <RichTextEditor
               value={textField2}
               onChange={(value) => setTextField2(value)}
               token={accessToken}
+              isInvalid={field2Error}
             />
+            {field2Error && (
+              <CFormFeedback>Field is required</CFormFeedback>
+            )}
           </form>
         </CModalBody>
         <CModalFooter>
@@ -248,15 +295,23 @@ const Feed = () => {
               value={textEditField1}
               id="exampleFormControlTextarea1"
               onChange={(e) => setTextEditField1(e.target.value)}
+              isInvalid={field1Error}
             ></CFormInput>
-            <CFormLabel htmlFor="exampleFormControlTextarea1">
+            {field1Error && (
+              <CFormFeedback>Field is required</CFormFeedback>
+            )}
+            <CFormLabel htmlFor="exampleFormControlTextarea2">
               Description
             </CFormLabel>
             <RichTextEditor
               value={textEditField2}
               onChange={(value) => setTextEditField2(value)}
               token={accessToken}
+              isInvalid={field2Error}
             />
+            {field2Error && (
+              <CFormFeedback>Field is required</CFormFeedback>
+            )}
           </form>
         </CModalBody>
         <CModalFooter>
@@ -278,6 +333,9 @@ const Feed = () => {
     </>
   );
 };
-const buttons = { margin: "10px" };
+
+const buttons = {
+  marginBottom: "20px",
+};
 
 export default Feed;
