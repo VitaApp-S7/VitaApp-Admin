@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getEvents, updateEvent, deleteEventById, createEvent } from "../../services/eventService";
-import {CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormInput, CFormLabel} from "@coreui/react";
+import { CButton, CListGroup, CModalTitle, CListGroupItem, CModal, CModalHeader, CModalBody, CModalFooter, CFormInput, CFormLabel } from "@coreui/react";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
 import RichTextEditor from "../../components/RichTextEditor";
 import RichTextListItem from "../../components/RichTextListItem";
+import { deleteImageById } from "../../services/imageService";
 
 const Feed = () => {
   const { instance, accounts } = useMsal();
@@ -20,6 +21,12 @@ const Feed = () => {
   const [textEditField2, setTextEditField2] = useState("");
   const [textEditId, setTextEditId] = useState("");
   const [editData, setEditData] = useState("");
+  const [addresses, setAddresses] = useState([]);
+
+  const handleAddressesChange = (addresses) => {
+    setAddresses(addresses);
+  };
+
 
   let newArray = new Array();
   const ListItem = (item) => {
@@ -55,6 +62,16 @@ const Feed = () => {
     );
   };
 
+  const getBlobImageUrls = (itemDescription) => {
+    const regex = /<img.*?src="(https:\/\/csb100320022a0453ef.blob.core.windows.net\/vitafilestorage\/[a-zA-Z0-9-]+)"/g;
+    const imageUrls = [];
+    let match;
+    while ((match = regex.exec(itemDescription))) {
+      imageUrls.push(match[1]);
+    }
+    return imageUrls;
+  }
+
   // eslint-disable-next-line no-unused-vars
   const onEdit = (item) => {
     setEditData(item);
@@ -62,6 +79,8 @@ const Feed = () => {
     setTextEditField1(item.item.title);
     setTextEditField2(item.item.description);
     setTextEditId(item.item.id);
+    setAddresses(getBlobImageUrls(item.item.description))
+
     setEditModalVisible(true);
   };
   const onDelete = (item) => {
@@ -70,6 +89,18 @@ const Feed = () => {
   };
   const deleteEvent = async (item) => {
     await deleteEventById(item.id, accessToken);
+    const imageUrls = getBlobImageUrls(item.description)
+    await Promise.all(
+      imageUrls.map(async (imageUrl) => {
+          try {
+            await deleteImageById(imageUrl, accessToken)
+
+          } catch (error) {
+            console.error("Error deleting image:", error);
+          }
+      })
+    );
+
     setDeleteModalVisible(false);
     handleActivities();
   };
@@ -101,6 +132,9 @@ const Feed = () => {
   };
 
   const handleSave = async () => {
+
+    const imageUrls = getBlobImageUrls(textField2)
+
     const postData = {
       title: textField1,
       description: textField2,
@@ -108,9 +142,25 @@ const Feed = () => {
     try {
       // eslint-disable-next-line no-unused-vars
       var events = await createEvent(postData, accessToken);
+
+      // Delete unused images
+      // TODO: make one function and use that instead of having the function declared again
+      await Promise.all(
+        addresses.map(async (imageUrl) => {
+          if (!imageUrls.includes(imageUrl)) {
+            try {
+              await deleteImageById(imageUrl, accessToken)
+
+            } catch (error) {
+              console.error("Error deleting image:", error);
+            }
+          }
+        })
+      );
       setIsOpen(false);
       setTextField1("");
       setTextField2("");
+      setAddresses([]);
       handleActivities();
     } catch (error) {
       console.error("Error:", error);
@@ -119,21 +169,39 @@ const Feed = () => {
   const handleCancel = () => {
     setTextField1("");
     setTextField2("");
+    setAddresses([]);
     setIsOpen(false);
     setDeleteModalVisible(false);
     setEditModalVisible(false);
   };
 
   const handleUpdate = async () => {
+    const imageUrls = getBlobImageUrls(textEditField2)
+
     const UpdateEvent = {
       id: textEditId,
       title: textEditField1,
       description: textEditField2,
     };
 
-    console.log(UpdateEvent);
     try {
       await updateEvent(UpdateEvent, accessToken);
+
+      // Delete unused images
+      // TODO: make one function and use that instead of having the function declared again
+      await Promise.all(
+        addresses.map(async (imageUrl) => {
+          if (!imageUrls.includes(imageUrl)) {
+            try {
+              await deleteImageById(imageUrl, accessToken)
+
+            } catch (error) {
+              console.error("Error deleting image:", error);
+            }
+          }
+        })
+      );
+
       setIsOpen(false);
       handleCancel();
       await handleActivities();
@@ -215,6 +283,8 @@ const Feed = () => {
               value={textField2}
               onChange={(value) => setTextField2(value)}
               token={accessToken}
+              addresses={addresses}
+              onAddressesChange={handleAddressesChange}
             />
           </form>
         </CModalBody>
@@ -235,7 +305,7 @@ const Feed = () => {
         className="modal-xl"
       >
         <CModalHeader closeButton>
-          <h5>Edit news item</h5>
+          <h5>Edit event item</h5>
         </CModalHeader>
         <CModalBody>
           <form>
@@ -254,6 +324,8 @@ const Feed = () => {
               value={textEditField2}
               onChange={(value) => setTextEditField2(value)}
               token={accessToken}
+              addresses={addresses}
+              onAddressesChange={handleAddressesChange}
             />
           </form>
         </CModalBody>

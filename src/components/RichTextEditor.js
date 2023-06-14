@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageUploader from "quill-image-uploader";
@@ -7,7 +7,8 @@ import 'quill-image-uploader/dist/quill.imageUploader.min.css';
 
 Quill.register("modules/imageUploader", ImageUploader);
 
-class NewRichTextEditor extends React.Component {
+
+class RichTextEditor extends React.Component {
   constructor(props) {
     super(props);
     this.quillRef = React.createRef();
@@ -16,6 +17,7 @@ class NewRichTextEditor extends React.Component {
 
   handleChange = (html) => {
     this.props.onChange(html);
+    // this.props.onAddressesChange(this.state.addresses);
   };
 
   modules = {
@@ -41,7 +43,8 @@ class NewRichTextEditor extends React.Component {
           
           try {
             const result = await uploadImage(formData, this.props.token);
-            console.log("result", result);
+            const newAddresses = [...this.props.addresses, result];
+            this.props.onAddressesChange(newAddresses);
             resolve(result);
           } catch (error) {
             reject("Upload failed");
@@ -65,4 +68,4 @@ class NewRichTextEditor extends React.Component {
   }
 }
 
-export default NewRichTextEditor;
+export default RichTextEditor;
